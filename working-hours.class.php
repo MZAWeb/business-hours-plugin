@@ -1,6 +1,9 @@
 <?php
 class WorkingHours {
 
+	/**
+	 * @var MZASettings
+	 */
 	public $settings;
 
 	public function  __construct() {
@@ -10,12 +13,14 @@ class WorkingHours {
 	}
 
 	public function shortcode( $atts, $content = null ) {
-		extract( shortcode_atts( array( 'closed'	  => 'Closed' ), $atts ) );
+
+		extract( shortcode_atts( array( 'closed'      => 'Closed' ), $atts ) );
+
 		if ( $content ) {
 
 			$day = $this->get_day_using_timezone();
 
-			$id   = key( $day );
+			$id = key( $day );
 
 			$open    = $this->settings->get_setting( $id, "open" );
 			$close   = $this->settings->get_setting( $id, "close" );
@@ -57,7 +62,7 @@ class WorkingHours {
 		$offset    = get_option( 'gmt_offset' );
 		$offset    = $offset * 60 * 60;
 		$timestamp = time() + $offset;
-		$arr = array( strtolower( gmdate( 'l', $timestamp ) )  => ucwords( date_i18n( 'l', $timestamp ) ) );
+		$arr       = array( strtolower( gmdate( 'l', $timestamp ) )  => ucwords( date_i18n( 'l', $timestamp ) ) );
 		return $arr;
 	}
 
@@ -67,7 +72,7 @@ class WorkingHours {
 		$days      = array();
 		for ( $i = 0; $i < 7; $i++ ) {
 
-			$days[] = array( strtolower( gmdate( 'l', $timestamp ) )  => ucwords( date_i18n( 'l', $timestamp ) ) );
+			$days[]    = array( strtolower( gmdate( 'l', $timestamp ) )  => ucwords( date_i18n( 'l', $timestamp ) ) );
 			$timestamp = strtotime( '+1 day', $timestamp );
 		}
 
@@ -89,14 +94,13 @@ class WorkingHours {
 			$ret .= '<div class="business_hours_collapsible">';
 		}
 
-
 		$days = $this->_get_week_days();
 
 		$ret .= "<table width='100%'>";
 		$ret .= "<tr><th>" . __( "Day", "business-hours" ) . "</th><th  class='business_hours_table_heading'>" . __( "Open", "business-hours" ) . "</th><th  class='business_hours_table_heading'>" . __( "Close", "business-hours" ) . "</th></tr>";
 		foreach ( $days as $day ) {
 
-			$id = key($day);
+			$id   = key( $day );
 			$name = $day[$id];
 
 			$open    = $workinghours->settings->get_setting( $id, "open" );
@@ -111,7 +115,6 @@ class WorkingHours {
 			} else {
 				$ret .= "<td class='business_hours_table_closed' colspan='2' align='center'>" . __( "Closed", "business-hours" ) . "</td>";
 			}
-
 
 			$ret .= "</tr>";
 		}
@@ -130,29 +133,30 @@ class WorkingHours {
 		$sections = array();
 
 		foreach ( $days as $day ) {
-			$id = key($day);
-			$name = $day[$id];
-			$sections[$id] = array( "title"  => $name, "business-hours",
-												   "fields" => array( "working" => array( "title"   => sprintf( __( "Is it open on %s?", "business-hours" ), $name ),
-																						  "type"	=> "checkbox",
-																						  "options" => array( "true" => "" ) ),
-																	  "open"	=> array( "title"	   => __( "Open", "business-hours" ) . ":",
-																						  "type"		=> "time",
-																						  "description" => "HH:MM"
+			$id            = key( $day );
+			$name          = $day[$id];
+			$sections[$id] = array( "title"  => $name,
+			                        "business-hours",
+			                        "fields" => array( "working" => array( "title"   => sprintf( __( "Is it open on %s?", "business-hours" ), $name ),
+			                                                               "type"    => "checkbox",
+			                                                               "options" => array( "true" => "" ) ),
+			                                           "open"    => array( "title"       => __( "Open", "business-hours" ) . ":",
+			                                                               "type"        => "time",
+			                                                               "description" => "HH:MM"
 
-																	  ),
-																	  "close"   => array( "title"	   => __( "Close", "business-hours" ) . ":",
-																						  "type"		=> "time",
-																						  "description" => "HH:MM"
+			                                           ),
+			                                           "close"   => array( "title"       => __( "Close", "business-hours" ) . ":",
+			                                                               "type"        => "time",
+			                                                               "description" => "HH:MM"
 
-																	  ) ) );
+			                                           ) ) );
 
 		}
 
 		$sections["support"] = array( "title"  => __( "Support", "business-hours" ),
-									  "fields" => array( "mzaweb" => array( "title" => __( "Bugs? Questions? Suggestions?", "business-hours" ),
-																			"type"  => "support",
-																			"email" => "support@mzaweb.com" ) ) );
+		                              "fields" => array( "mzaweb" => array( "title" => __( "Bugs? Questions? Suggestions?", "business-hours" ),
+		                                                                    "type"  => "support",
+		                                                                    "email" => "support@mzaweb.com" ) ) );
 
 		$this->settings                    = new MZASettings( "working-hours", 'options-general.php', $sections );
 		$this->settings->settingsPageTitle = __( "Business Hours Settings", "business-hours" );
@@ -183,8 +187,5 @@ class WorkingHours {
                 jQuery('.field-row-time').eq(index+1).hide();
             }
         });";
-
-
 	}
-
 }
