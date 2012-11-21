@@ -1,0 +1,98 @@
+# Copyright (C) 2012 
+# This file is distributed under the same license as the  package.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/business-hours-plugin\n"
+"POT-Creation-Date: 2012-03-10 12:29:13+00:00\n"
+"PO-Revision-Date: 2012-03-10 09:33-0300\n"
+"Last-Translator: Daniel Dvorkin <daniel@think-thanks.com>\n"
+"Language-Team: MZAWeb <wordpress@mzaweb.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Spanish\n"
+
+#: lib/MZAFormBuilderForSettings.php:29
+msgid "Save Changes"
+msgstr "Guardar Cambios"
+
+#: widget.php:12
+msgid "Shows your business hours by day"
+msgstr "Muestra el horario de trabajo por d&iacute;a"
+
+#: widget.php:16
+msgid "Business Hours by Day"
+msgstr "Horas de trabajo por d&iacute;a"
+
+#: widget.php:94
+msgid "Business hours on"
+msgstr "Horario el d&iacute;a"
+
+#: widget.php:96
+#: working-hours.class.php:97
+msgid "Closed"
+msgstr "Cerrado"
+
+#: widget.php:106
+msgid "Title"
+msgstr "T&iacute;tulo"
+
+#: widget.php:111
+msgid "Template for heading"
+msgstr "Template del encabezado"
+
+#: widget.php:116
+msgid "Template for working hours"
+msgstr "Template del horario"
+
+#: widget.php:118
+msgid "The tags {{Open}} and {{Close}} will be replaced with the correct value."
+msgstr "Los tags {{Open}} y {{Close}} ser&aacute;n reemplazados por el horario de apertura y cierre, respectivamente."
+
+#: widget.php:121
+msgid "Template for \"closed\" text"
+msgstr "Template para el texto de cerrado"
+
+#: widget.php:126
+msgid "Show also a collapsible list with the business hours for each weekday:"
+msgstr "Mostrar una lista colapsable con el horario de todos los d&iacute;as de la semana:"
+
+#: working-hours.class.php:71
+msgid "[Show all days]"
+msgstr "[Ver todos los d&iacute;as]"
+
+#: working-hours.class.php:84
+msgid "Day"
+msgstr "D&iacute;a"
+
+#: working-hours.class.php:84
+#: working-hours.class.php:128
+msgid "Open"
+msgstr "Apertura"
+
+#: working-hours.class.php:84
+#: working-hours.class.php:133
+msgid "Close"
+msgstr "Cierre"
+
+#: working-hours.class.php:125
+msgid "Is it open on %s?"
+msgstr "Est&aacute; abierto el %s?"
+
+#: working-hours.class.php:141
+msgid "Support"
+msgstr "Soporte"
+
+#: working-hours.class.php:142
+msgid "Bugs? Questions? Suggestions?"
+msgstr "Bugs? Preguntas? Sugerencias"
+
+#: working-hours.class.php:147
+msgid "Business Hours Settings"
+msgstr "Configuraci&oacute;n de horas de trabajo"
+
+#: working-hours.class.php:148
+msgid "Business Hours"
+msgstr "Horas de trabajo"
+

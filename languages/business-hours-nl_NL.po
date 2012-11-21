@@ -1,0 +1,91 @@
+# Translation of Business Hours Plugin in Dutch
+# This file is distributed under the same license as the Business Hours Plugin package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2012-03-16 15:40:53+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: GlotPress/0.1\n"
+"Project-Id-Version: Business Hours Plugin\n"
+
+#: lib/MZAFormBuilderForSettings.php:29
+msgid "Save Changes"
+msgstr "Wijzigingen opslaan"
+
+#: widget.php:12
+msgid "Shows your business hours by day"
+msgstr "Laat de openingstijden per dag zien"
+
+#: widget.php:16
+msgid "Business Hours by Day"
+msgstr "Openingstijden per dag"
+
+#: widget.php:94
+msgid "Business hours on"
+msgstr "Openingstijden op"
+
+#: widget.php:96 working-hours.class.php:97
+msgid "Closed"
+msgstr "Gesloten"
+
+#: widget.php:106
+msgid "Title"
+msgstr "Titel"
+
+#: widget.php:111
+msgid "Template for heading"
+msgstr "Sjabloon voor hoofd tekst"
+
+#: widget.php:116
+msgid "Template for working hours"
+msgstr "Sjabloon voor open tijden"
+
+#: widget.php:118
+msgid "The tags {{Open}} and {{Close}} will be replaced with the correct value."
+msgstr "De tags {{Open}} en {{Gesloten}} worden vervangen door de juiste waarde"
+
+#: widget.php:121
+msgid "Template for \"closed\" text"
+msgstr "Sjabloon voor \"gesloten\" tekst"
+
+#: widget.php:126
+msgid "Show also a collapsible list with the business hours for each weekday:"
+msgstr "Laat ook een opvouwbare lijst zien met openingstijden voor elke dag"
+
+#: working-hours.class.php:71
+msgid "[Show all days]"
+msgstr "[laat alle dagen zien]"
+
+#: working-hours.class.php:84
+msgid "Day"
+msgstr "Dag"
+
+#: working-hours.class.php:84 working-hours.class.php:128
+msgid "Open"
+msgstr "Open"
+
+#: working-hours.class.php:84 working-hours.class.php:133
+msgid "Close"
+msgstr "Gesloten"
+
+#: working-hours.class.php:125
+msgid "Is it open on %s?"
+msgstr "Zijn we open op %s?"
+
+#: working-hours.class.php:141
+msgid "Support"
+msgstr "Ondersteuning"
+
+#: working-hours.class.php:142
+msgid "Bugs? Questions? Suggestions?"
+msgstr "Fouten? Vragen? Suggesties?"
+
+#: working-hours.class.php:147
+msgid "Business Hours Settings"
+msgstr "Business Hours Instellingen"
+
+#: working-hours.class.php:148
+msgid "Business Hours"
+msgstr "Openings Tijden"
