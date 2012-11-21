@@ -91,7 +91,17 @@ class WorkingHours {
 		echo $this->get_table( $collapsible_link );
 	}
 
-	public function get_table( $collapsible_link = true ) {
+	/**
+	 * @param bool $collapsible_link
+	 *
+	 * @filter business-hours-closed-text
+	 * @filter business-hours-open-hour
+	 * @filter business-hours-close-hour
+	 * @filter business-hours-is-open-today
+	 *
+ 	 * @return string
+	 */
+	 public function get_table( $collapsible_link = true ) {
 
 		global $workinghours;
 
@@ -111,17 +121,23 @@ class WorkingHours {
 			$id   = key( $day );
 			$name = $day[$id];
 
-			$open    = $workinghours->settings->get_setting( $id, "open" );
-			$close   = $workinghours->settings->get_setting( $id, "close" );
-			$working = $workinghours->settings->get_setting( $id, "working" );
+			$open    = apply_filters( "business-hours-open-hour", $workinghours->settings->get_setting( $id, "open" ), $id );
+			$close   = apply_filters( "business-hours-close-hour", $workinghours->settings->get_setting( $id, "close" ), $id );
+			$working = apply_filters( "business-hours-is-open-today", $workinghours->settings->get_setting( $id, "working" ), $id );
+
 
 			$ret .= "<tr>";
 			$ret .= "<td class='business_hours_table_day'>" . ucwords( $name ) . "</td>";
+
 			if ( $working == "true" ) {
 				$ret .= "<td class='business_hours_table_open'>" . ucwords( $open ) . "</td>";
 				$ret .= "<td class='business_hours_table_close'>" . ucwords( $close ) . "</td>";
+
 			} else {
-				$ret .= "<td class='business_hours_table_closed' colspan='2' align='center'>" . __( "Closed", "business-hours" ) . "</td>";
+
+				$closed_text = apply_filters( "business-hours-closed-text", __( "Closed", "business-hours" ) );
+				$ret .= "<td class='business_hours_table_closed' colspan='2' align='center'>" .  $closed_text . "</td>";
+
 			}
 
 			$ret .= "</tr>";
