@@ -59,10 +59,18 @@ class WorkingHours {
 
 
 	public function get_day_using_timezone() {
-		$offset    = get_option( 'gmt_offset' );
-		$offset    = $offset * 60 * 60;
-		$timestamp = time() + $offset;
-		$arr       = array( strtolower( gmdate( 'l', $timestamp ) )  => ucwords( date_i18n( 'l', $timestamp ) ) );
+
+		if ( get_option( 'timezone_string' ) ) {
+			$zone      = new DateTimeZone( get_option( 'timezone_string' ) );
+			$timestamp = new DateTime( 'now', $zone );
+			$timestamp = strtotime( $timestamp->date );
+		} else {
+			$offset    = get_option( 'gmt_offset' );
+			$offset    = $offset * 60 * 60;
+			$timestamp = time() + $offset;
+		}
+
+		$arr = array( strtolower( gmdate( 'l', $timestamp ) )  => ucwords( date_i18n( 'l', $timestamp ) ) );
 		return $arr;
 	}
 
