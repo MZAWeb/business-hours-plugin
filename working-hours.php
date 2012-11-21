@@ -11,7 +11,7 @@ Version: 1.3.2
 
 /* CONSTANTS */
 
-define('OPENHOURS_PATH', dirname(__FILE__));
+define( 'OPENHOURS_PATH', dirname( __FILE__ ) );
 
 /* IMPORTS */
 require OPENHOURS_PATH . '/lib/MZASettings.php';
@@ -26,8 +26,5 @@ function bussiness_hours_init() {
 	global $workinghours;
 	$workinghours = new WorkingHours();
 }
-add_action('init', 'bussiness_hours_init');
 
-
-
-?>
+add_action( 'init', 'bussiness_hours_init' );

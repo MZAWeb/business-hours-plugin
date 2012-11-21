@@ -1,5 +1,5 @@
 === Business Hours Plugin  ===
-Contributors: MZAWeb, thinkwolfpack
+Contributors: MZAWeb
 Donate link: http://mzaweb.com
 Tags: working hours, working, business hours, business, hours
 Requires at least: 3.1
@@ -61,7 +61,6 @@ You can also use
 
 to have the list collapsed by default and a link to open it.
 
-
 == Screenshots ==
 
 1. Working Hours
@@ -70,6 +69,9 @@ to have the list collapsed by default and a link to open it.
 4. Front-End: Working
 
 == Upgrade Notice ==
+
+= 1.3.3 =
+
 
 = 1.3.2 =
 * Fixed how the plugin handles weekdays names localization
