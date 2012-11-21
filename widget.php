@@ -132,7 +132,6 @@ class WorkingHoursWidget extends WP_Widget{
              </p>
 
 
-
         	<?php
 	    }
     }
