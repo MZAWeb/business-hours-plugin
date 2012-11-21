@@ -3,8 +3,8 @@ Contributors: MZAWeb
 Donate link: http://mzaweb.com
 Tags: working hours, working, business hours, business, hours
 Requires at least: 3.1
-Tested up to: 3.3.1
-Stable tag: 1.3.2
+Tested up to: 3.4.2
+Stable tag: 1.3.3
 
 Business Hours lets you show to your visitors the time you open and close your business each day of the week.
 
@@ -71,7 +71,13 @@ to have the list collapsed by default and a link to open it.
 == Upgrade Notice ==
 
 = 1.3.3 =
-
+* Bugfix: Fixed how I'm handling timezones to account for DST
+* Bugfix: Fixed minor bugs for WordPress 3.4.2
+* New filter: Introduced filter *business-hours-closed-text* to allow changing the "Closed" text (for an image, other text, etc)
+* New filter: Introduced filter *business-hours-open-hour*
+* New filter: Introduced filter *business-hours-close-hour*
+* New filter: Introduced filter *business-hours-is-open-today*
+* Minor code styling
 
 = 1.3.2 =
 * Fixed how the plugin handles weekdays names localization
