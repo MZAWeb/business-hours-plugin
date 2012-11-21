@@ -1,0 +1,17 @@
+.business_hours_collapsible{
+    display: none;
+}
+.business_hours_table_closed{
+	text-align: center;
+}
+
+.business_hours_table_heading{
+	text-align: center;
+}
+
+.business_hours_table_open{
+	text-align: center;
+}
+.business_hours_table_close{
+	text-align: center;
+}
