@@ -5,7 +5,7 @@ Plugin URI: http://mzaweb.com/en
 Description: Business Hours lets you show to your visitors the time you open and close your business each day of the week.
 Author: MZAWeb
 Author URI: http://mzaweb.com
-Version: 1.3.2
+Version: 2.0-alpha
 */
 
 
