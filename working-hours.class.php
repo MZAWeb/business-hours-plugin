@@ -1,12 +1,17 @@
 <?php
-class WorkingHours {
+class BusinessHours {
 
 	/**
 	 * @var MZASettings
 	 */
 	public $settings;
+	private static $instance;
+	private $path;
+	private $url;
+
 
 	public function  __construct() {
+		$this->path = trailingslashit( dirname( __FILE__ ) );
 		$this->register_settings();
 		add_shortcode( 'businesshours', array( $this, 'shortcode' ) );
 		add_shortcode( 'businesshoursweek', array( $this, 'shortcode_table' ) );
@@ -99,9 +104,9 @@ class WorkingHours {
 	 * @filter business-hours-close-hour
 	 * @filter business-hours-is-open-today
 	 *
- 	 * @return string
+	 * @return string
 	 */
-	 public function get_table( $collapsible_link = true ) {
+	public function get_table( $collapsible_link = true ) {
 
 		global $workinghours;
 
@@ -136,7 +141,7 @@ class WorkingHours {
 			} else {
 
 				$closed_text = apply_filters( "business-hours-closed-text", __( "Closed", "business-hours" ) );
-				$ret .= "<td class='business_hours_table_closed' colspan='2' align='center'>" .  $closed_text . "</td>";
+				$ret .= "<td class='business_hours_table_closed' colspan='2' align='center'>" . $closed_text . "</td>";
 
 			}
 
@@ -211,5 +216,47 @@ class WorkingHours {
                 jQuery('.field-row-time').eq(index+1).hide();
             }
         });";
+	}
+
+	/**
+	 * Allows users to overide views templates.
+	 *
+	 * It'll first check if the given $template is present in a business-hours folder in the user's theme.
+	 * If the user didn't create an overide, it'll load the default file from this plugin's views template.
+	 *
+	 * @param $template
+	 *
+	 * @return string
+	 */
+	public function locate_view( $template ) {
+		if ( $theme_file = locate_template( array( 'business-hours/' . $template ) ) ) {
+			$file = $theme_file;
+		} else {
+			$file = $this->path . 'views/' . $template;
+		}
+		return apply_filters( 'business-hours-view-template', $file, $template );
+	}
+
+
+	/**
+	 * @static
+	 * @return BusinessHours
+	 */
+	public static function instance() {
+		if ( !isset( self::$instance ) ) {
+			$className      = __CLASS__;
+			self::$instance = new $className;
+		}
+		return self::$instance;
+	}
+
+}
+
+if ( !function_exists( 'business_hours' ) ) {
+	/**
+	 * @return BusinessHours
+	 */
+	function business_hours() {
+		return BusinessHours::instance();
 	}
 }

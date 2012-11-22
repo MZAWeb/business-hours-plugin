@@ -8,23 +8,13 @@ Author URI: http://mzaweb.com
 Version: 2.0-alpha
 */
 
+require 'lib/MZASettings.php';
+require 'working-hours.class.php';
+require 'widget.php';
 
-/* CONSTANTS */
-
-define( 'OPENHOURS_PATH', dirname( __FILE__ ) );
-
-/* IMPORTS */
-require OPENHOURS_PATH . '/lib/MZASettings.php';
-require OPENHOURS_PATH . '/working-hours.class.php';
-require OPENHOURS_PATH . '/widget.php';
-
-
-/* START */
-
-function bussiness_hours_init() {
+function business_hours_init() {
 	load_plugin_textdomain( 'business-hours', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-	global $workinghours;
-	$workinghours = new WorkingHours();
+	business_hours();
 }
 
-add_action( 'init', 'bussiness_hours_init' );
+add_action( 'init', 'business_hours_init' );
