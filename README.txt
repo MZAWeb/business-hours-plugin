@@ -73,12 +73,15 @@ to have the list collapsed by default and a link to open it.
 = 2.0 =
 * Bugfix: Fixed how I'm handling timezones to account for DST
 * Bugfix: Fixed minor bugs for WordPress 3.4.2
-* New filter: Introduced filter *business-hours-closed-text* to allow changing the "Closed" text (for an image, other text, etc)
-* New filter: Introduced filter *business-hours-open-hour*
-* New filter: Introduced filter *business-hours-close-hour*
-* New filter: Introduced filter *business-hours-is-open-today*
+* New filter: *business-hours-closed-text*
+* New filter: *business-hours-open-hour*
+* New filter: *business-hours-close-hour*
+* New filter: *business-hours-is-open-today*
+* New filter: *business-hours-view-template*
+* Enhancement: Allow users to overide views templates
+* Enhancement: Cleanup widget admin. Hide templating fields.
 * Enhancement: Make it work with WordPress 3.5
-* Enhancement: Cleanup widget admin. Hide advanced fields.
+* General cleaning and improve architecture.
 
 = 1.3.2 =
 * Fixed how the plugin handles weekdays names localization
