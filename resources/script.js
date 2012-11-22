@@ -1,11 +1,12 @@
-jQuery(document).ready(function($) {
+jQuery( document ).ready( function ( $ ) {
 
-    $(".business_hours_collapsible_handler").click(function() {
-        $(".business_hours_collapsible").slideToggle();
-        return false;
-    });
+	$( "body" ).on( 'click', '.business_hours_collapsible_handler', function ( e ) {
+		e.preventDefault();
+		$( ".business_hours_collapsible" ).slideToggle();
+	} );
 
-});
+
+} );
 
 
 

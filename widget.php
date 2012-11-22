@@ -60,8 +60,12 @@ class WorkingHoursWidget extends WP_Widget {
 
 		echo $template;
 
-		if ( $instance['allweek'] == "1" )
-			business_hours()->show_table();
+		// To catch instances saved in old versions of the plugin
+		$instance['collapsible'] = isset( $instance['collapsible'] ) ? $instance['collapsible'] : '1';
+
+		if ( $instance['allweek'] === "1" )
+			business_hours()->show_table( ( $instance['collapsible'] === '1' ) );
+
 
 		echo $after_widget;
 
@@ -74,7 +78,8 @@ class WorkingHoursWidget extends WP_Widget {
 		$instance['template_today']  = $new_instance['template_today'];
 		$instance['template_hours']  = $new_instance['template_hours'];
 		$instance['template_closed'] = $new_instance['template_closed'];
-		$instance['allweek']         = $new_instance['allweek'];
+		$instance['allweek']         = isset( $new_instance['allweek'] ) ? '1' : '';
+		$instance['collapsible']     = isset( $new_instance['collapsible'] ) ? '1' : '';
 
 		return $instance;
 
@@ -86,7 +91,8 @@ class WorkingHoursWidget extends WP_Widget {
 		                   'template_today'  => "<div class='working_hours_title'>" . __( "Business hours on", "business-hours" ) . " {{Day}}</div>",
 		                   'template_hours'  => "<span class='working_hours_open'>{{Open}}</span> - <span class='working_hours_close'>{{Close}}</span>",
 		                   'template_closed' => "<div class='working_hours_closed'>" . __( "Closed", "business-hours" ) . "</div>",
-		                   'allweek'         => 0 );
+		                   'allweek'         => 0,
+		                   'collapsible'     => 1 );
 
 		$instance = wp_parse_args( (array)$instance, $defaults );
 

@@ -2,17 +2,27 @@
 	<small><?php echo sprintf( __( 'Go to the <a href="%s">settings</a> to setup your business hours.', 'business-hours' ), admin_url( "options-general.php?page=working-hours-settings" ) ); ?></small>
 </p>
 <p>
-	<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( "Widget title", "business-hours" );?>:</label><br/>
+	<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( "Widget title", "business-hours" );?>
+		:</label><br/>
 	<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>"
-	       name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance["title"]; ?>"
+	       name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $instance["title"] ); ?>"
 	       type="text"/>
 </p>
 <p>
-	<label
-		for="<?php echo $this->get_field_id( 'allweek' ); ?>"><?php _e( "Show a collapsible list with the business hours for each weekday:", "business-hours" );?> </label>
-	<input type="checkbox" id="<?php echo $this->get_field_id( 'allweek' ); ?>"
+	<input type="checkbox"
+	       id="<?php echo $this->get_field_id( 'allweek' ); ?>"
 	       value="1" <?php checked( $instance["allweek"] == "1" );  ?>
 	       name="<?php echo $this->get_field_name( 'allweek' ); ?>"/>
+	<label
+		for="<?php echo $this->get_field_id( 'allweek' ); ?>"><?php _e( "Show a table with the business hours for all weekdays", "business-hours" );?> </label>
+</p>
+<p>
+	<input type="checkbox" id="<?php echo $this->get_field_id( 'collapsible' ); ?>"
+	       value="1" <?php checked( $instance["collapsible"] == "1" );  ?>
+	       name="<?php echo $this->get_field_name( 'collapsible' ); ?>"/>
+	<label
+		for="<?php echo $this->get_field_id( 'collapsible' ); ?>"><?php _e( "Make the list collapsible", "business-hours" );?> </label>
+
 </p>
 <p>
 	<a href='#'
