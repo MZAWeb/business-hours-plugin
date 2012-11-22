@@ -24,33 +24,22 @@ class WorkingHoursWidget extends WP_Widget {
 
 	}
 
-
 	function scripts() {
-		wp_enqueue_script( 'jquery' );
-
-		wp_register_script( 'BusinessHoursScript', plugins_url( 'script.js', __FILE__ ), array( 'jquery' ) );
-		wp_enqueue_script( 'BusinessHoursScript' );
-
-		wp_register_style( 'BusinessHoursStyle', plugins_url( 'style.css', __FILE__ ) );
-		wp_enqueue_style( 'BusinessHoursStyle' );
+		business_hours()->enqueue_resources();
 	}
-
 
 	function widget( $args, $instance ) {
 		extract( $args );
 
-		global $workinghours;
-
-		$title = $instance['title'];
-
+		$title = esc_html( $instance['title'] );
 
 		$day = business_hours()->get_day_using_timezone();
 
 		$id   = key( $day );
 		$name = $day[$id];
 
-		$open    = business_hours()->settings->get_setting( $id, "open" );
-		$close   = business_hours()->settings->get_setting( $id, "close" );
+		$open    = esc_html( business_hours()->settings->get_setting( $id, "open" ) );
+		$close   = esc_html( business_hours()->settings->get_setting( $id, "close" ) );
 		$working = business_hours()->settings->get_setting( $id, "working" );
 
 		echo $before_widget;
@@ -71,11 +60,8 @@ class WorkingHoursWidget extends WP_Widget {
 
 		echo $template;
 
-		if ( $instance['allweek'] == "1" ) {
-
+		if ( $instance['allweek'] == "1" )
 			business_hours()->show_table();
-
-		}
 
 		echo $after_widget;
 
@@ -103,7 +89,7 @@ class WorkingHoursWidget extends WP_Widget {
 		                   'allweek'         => 0 );
 
 		$instance = wp_parse_args( (array)$instance, $defaults );
-		$pepe     = "lalalaal";
+
 		include business_hours()->locate_view( 'widget-admin.php' );
 
 	}

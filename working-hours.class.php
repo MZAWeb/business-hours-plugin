@@ -12,13 +12,22 @@ class BusinessHours {
 
 	public function  __construct() {
 		$this->path = trailingslashit( dirname( __FILE__ ) );
+		$this->url  = trailingslashit( plugins_url( '', __FILE__ ) );
+
 		$this->register_settings();
 		add_shortcode( 'businesshours', array( $this, 'shortcode' ) );
 		add_shortcode( 'businesshoursweek', array( $this, 'shortcode_table' ) );
 	}
 
+	public function enqueue_resources() {
+		wp_enqueue_style( 'BusinessHoursStyle', $this->url . 'resources/style.css' );
+		wp_enqueue_script( 'BusinessHoursScript', $this->url . 'resources/script.js', array( 'jquery' ) );
+	}
+
+
 	public function shortcode( $atts, $content = null ) {
 
+		$closed = "";
 		extract( shortcode_atts( array( 'closed'      => 'Closed' ), $atts ) );
 
 		if ( $content ) {
@@ -43,6 +52,7 @@ class BusinessHours {
 
 	public function shortcode_table( $atts ) {
 
+		$collapsible = 'false';
 		extract( shortcode_atts( array( 'collapsible' => 'false', ), $atts ) );
 
 		if ( strtolower( $collapsible ) == "true" ) {
@@ -53,11 +63,7 @@ class BusinessHours {
 		}
 
 		if ( $collapsible ) {
-			wp_register_style( 'BusinessHoursStyle', plugins_url( 'style.css', __FILE__ ) );
-			wp_enqueue_style( 'BusinessHoursStyle' );
-
-			wp_register_script( 'BusinessHoursScript', plugins_url( 'script.js', __FILE__ ), array( 'jquery' ) );
-			wp_enqueue_script( 'BusinessHoursScript' );
+			$this->enqueue_resources();
 		}
 		return $this->get_table( $collapsible );
 	}
@@ -80,7 +86,6 @@ class BusinessHours {
 	}
 
 	private function _get_week_days() {
-
 		$timestamp = strtotime( 'next Sunday' );
 		$days      = array();
 		for ( $i = 0; $i < 7; $i++ ) {
@@ -88,7 +93,6 @@ class BusinessHours {
 			$days[]    = array( strtolower( gmdate( 'l', $timestamp ) )  => ucwords( date_i18n( 'l', $timestamp ) ) );
 			$timestamp = strtotime( '+1 day', $timestamp );
 		}
-
 		return $days;
 	}
 
@@ -108,8 +112,6 @@ class BusinessHours {
 	 */
 	public function get_table( $collapsible_link = true ) {
 
-		global $workinghours;
-
 		$ret = "";
 
 		if ( $collapsible_link ) {
@@ -126,9 +128,9 @@ class BusinessHours {
 			$id   = key( $day );
 			$name = $day[$id];
 
-			$open    = apply_filters( "business-hours-open-hour", $workinghours->settings->get_setting( $id, "open" ), $id );
-			$close   = apply_filters( "business-hours-close-hour", $workinghours->settings->get_setting( $id, "close" ), $id );
-			$working = apply_filters( "business-hours-is-open-today", $workinghours->settings->get_setting( $id, "working" ), $id );
+			$open    = apply_filters( "business-hours-open-hour", business_hours()->settings->get_setting( $id, "open" ), $id );
+			$close   = apply_filters( "business-hours-close-hour", business_hours()->settings->get_setting( $id, "close" ), $id );
+			$working = apply_filters( "business-hours-is-open-today", business_hours()->settings->get_setting( $id, "working" ), $id );
 
 
 			$ret .= "<tr>";
