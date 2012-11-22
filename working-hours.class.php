@@ -5,26 +5,42 @@ class BusinessHours {
 	 * @var MZASettings
 	 */
 	public $settings;
+	/**
+	 * @var BusinessHours
+	 */
 	private static $instance;
+
 	private $path;
 	private $url;
-
 
 	public function  __construct() {
 		$this->path = trailingslashit( dirname( __FILE__ ) );
 		$this->url  = trailingslashit( plugins_url( '', __FILE__ ) );
 
 		$this->_register_settings();
+
 		add_shortcode( 'businesshours', array( $this, 'shortcode' ) );
 		add_shortcode( 'businesshoursweek', array( $this, 'shortcode_table' ) );
 	}
 
+	/**
+	 *  Load the required styles and javascript files
+	 */
 	public function enqueue_resources() {
-		wp_enqueue_style( 'BusinessHoursStyle', $this->url . 'resources/style.css' );
-		wp_enqueue_script( 'BusinessHoursScript', $this->url . 'resources/script.js', array( 'jquery' ) );
+		wp_enqueue_style( 'BusinessHoursStyle', $this->url . 'resources/business-hours.css' );
+		wp_enqueue_script( 'BusinessHoursScript', $this->url . 'resources/business-hours.js', array( 'jquery' ) );
 	}
 
-
+	/**
+	 *
+	 * Today's hours shortcode handler.
+	 * See https://github.com/MZAWeb/business-hours-plugin/wiki/Shortcodes
+	 *
+	 * @param      $atts
+	 * @param null $content
+	 *
+	 * @return mixed|null
+	 */
 	public function shortcode( $atts, $content = null ) {
 
 		extract( shortcode_atts( array( 'closed'      => 'Closed' ), $atts ) );
@@ -50,6 +66,15 @@ class BusinessHours {
 		return $content;
 	}
 
+	/**
+	 *
+	 * Everyday hours shortcode handler.
+	 * See https://github.com/MZAWeb/business-hours-plugin/wiki/Shortcodes
+	 *
+	 * @param      $atts
+	 *
+	 * @return mixed|null
+	 */
 	public function shortcode_table( $atts ) {
 
 		extract( shortcode_atts( array( 'collapsible' => 'false', ), $atts ) );
@@ -62,6 +87,12 @@ class BusinessHours {
 	}
 
 
+	/**
+	 * Get the today's day name depending on the WP setting.
+	 * To adjust your timezone go to Settings->General
+	 *
+	 * @return array
+	 */
 	public function get_day_using_timezone() {
 
 		if ( get_option( 'timezone_string' ) ) {
@@ -78,6 +109,12 @@ class BusinessHours {
 		return $arr;
 	}
 
+	/**
+	 *
+	 * Get the internationalized days names
+	 *
+	 * @return array
+	 */
 	private function _get_week_days() {
 		$timestamp = strtotime( 'next Sunday' );
 		$days      = array();
@@ -89,6 +126,8 @@ class BusinessHours {
 	}
 
 	/**
+	 * Echo the table with the open/close hours for each day of the week
+	 *
 	 * @param bool $collapsible_link
 	 *
 	 * @filter business-hours-collapsible-link-anchor
@@ -103,6 +142,8 @@ class BusinessHours {
 	}
 
 	/**
+	 * Returns the table with the open/close hours for each day of the week
+	 *
 	 * @param bool $collapsible_link
 	 *
 	 * @return string
@@ -114,6 +155,9 @@ class BusinessHours {
 	}
 
 	/**
+	 *
+	 * Echo the row for the given day for the hours table.
+	 *
 	 * @param $day
 	 *
 	 * @filter business-hours-closed-text
@@ -139,6 +183,10 @@ class BusinessHours {
 	}
 
 
+	/**
+	 *  Register the settings to create the settings screen
+	 *
+	 */
 	private function _register_settings() {
 
 		$days     = $this->_get_week_days();
@@ -222,6 +270,8 @@ class BusinessHours {
 
 
 	/**
+	 * Returns the singleton instance for this class.
+	 *
 	 * @static
 	 * @return BusinessHours
 	 */
@@ -237,6 +287,8 @@ class BusinessHours {
 
 if ( !function_exists( 'business_hours' ) ) {
 	/**
+	 * Shorthand for BusinessHours::instance()
+	 *
 	 * @return BusinessHours
 	 */
 	function business_hours() {
