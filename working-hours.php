@@ -6,6 +6,10 @@ Description: Business Hours lets you show to your visitors the time you open and
 Author: MZAWeb
 Author URI: http://mzaweb.com
 Version: 2.0-alpha
+
+For documentation see: https://github.com/MZAWeb/business-hours-plugin/wiki
+For bug reports, ideas or comments: https://github.com/MZAWeb/business-hours-plugin/issues?state=open
+
 */
 
 require 'lib/MZASettings.php';
