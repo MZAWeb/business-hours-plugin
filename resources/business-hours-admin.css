@@ -1,0 +1,20 @@
+#icon-options-business-hours {
+	background-image : url(images/clock.png);
+}
+
+.business_hours_hour_field {
+	width   : 45px !important;
+	padding : 3px !important;
+}
+
+#business_hours_days_table thead td {
+	font-weight : bold;
+}
+
+#business_hours_days_table tr td {
+	text-align    : center;
+	margin-bottom : 3px;
+	padding       : 2px 5px;
+	line-height   : 16px;
+	font-size     : 12px;
+}

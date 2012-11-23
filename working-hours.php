@@ -12,9 +12,9 @@ For bug reports, ideas or comments: https://github.com/MZAWeb/business-hours-plu
 
 */
 
-require 'lib/MZASettings.php';
-require 'working-hours.class.php';
-require 'widget.php';
+require 'lib/BusinessHours.class.php';
+require 'lib/BusinessHoursSettings.class.php';
+require 'lib/BusinessHoursWidget.class.php';
 
 function business_hours_init() {
 	load_plugin_textdomain( 'business-hours', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );

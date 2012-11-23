@@ -1,34 +1,36 @@
 <?php
 class BusinessHours {
 
-	/**
-	 * @var MZASettings
-	 */
-	public $settings;
+	const VERSION = '2.0';
+	const SLUG    = 'business-hours';
+
 	/**
 	 * @var BusinessHours
 	 */
 	private static $instance;
+	/**
+	 * @var BusinessHoursSettings
+	 */
+	private $settings;
+
 
 	private $path;
 	private $url;
 
 	public function  __construct() {
-		$this->path = trailingslashit( dirname( __FILE__ ) );
-		$this->url  = trailingslashit( plugins_url( '', __FILE__ ) );
+		$this->path = trailingslashit( dirname( dirname( __FILE__ ) ) );
+		$this->url  = trailingslashit( dirname( plugins_url( '', __FILE__ ) ) );
 
 		$this->_register_settings();
-
-		add_shortcode( 'businesshours', array( $this, 'shortcode' ) );
-		add_shortcode( 'businesshoursweek', array( $this, 'shortcode_table' ) );
+		$this->_register_shortcodes();
 	}
 
 	/**
 	 *  Load the required styles and javascript files
 	 */
 	public function enqueue_resources() {
-		wp_enqueue_style( 'BusinessHoursStyle', $this->url . 'resources/business-hours.css' );
-		wp_enqueue_script( 'BusinessHoursScript', $this->url . 'resources/business-hours.js', array( 'jquery' ) );
+		wp_enqueue_style( 'business_hours_style', $this->url . 'resources/business-hours.css' );
+		wp_enqueue_script( 'business_hours_script', $this->url . 'resources/business-hours.js', array( 'jquery' ) );
 	}
 
 	/**
@@ -115,7 +117,7 @@ class BusinessHours {
 	 *
 	 * @return array
 	 */
-	private function _get_week_days() {
+	public function get_week_days() {
 		$timestamp = strtotime( 'next Sunday' );
 		$days      = array();
 		for ( $i = 0; $i < 7; $i++ ) {
@@ -134,7 +136,7 @@ class BusinessHours {
 	 *
 	 */
 	public function show_table( $collapsible_link = true ) {
-		$days = $this->_get_week_days();
+		$days = $this->get_week_days();
 
 		$collapsible_link_anchor = apply_filters( 'business-hours-collapsible-link-anchor', '[Show working hours]' );
 
@@ -182,12 +184,30 @@ class BusinessHours {
 
 	}
 
+	/**
+	 *
+	 */
+	private function _register_shortcodes() {
+		add_shortcode( 'businesshours', array( $this, 'shortcode' ) );
+		add_shortcode( 'businesshoursweek', array( $this, 'shortcode_table' ) );
+	}
+
+	/**
+	 * @return BusinessHoursSettings
+	 */
+	public function settings() {
+		return $this->settings;
+	}
 
 	/**
 	 *  Register the settings to create the settings screen
 	 *
 	 */
 	private function _register_settings() {
+
+		$this->settings = new BusinessHoursSettings();
+
+		return;
 
 		$days     = $this->_get_week_days();
 		$sections = array();
@@ -212,6 +232,11 @@ class BusinessHours {
 			                                           ) ) );
 
 		}
+
+		$sections["exceptions"] = array( "title"  => __( "Exceptions", "business-hours" ),
+		                                 "fields" => array( "mzaweb" => array( "title" => __( "Bugs? Questions? Suggestions?", "business-hours" ),
+		                                                                       "type"  => "support",
+		                                                                       "email" => "support@mzaweb.com" ) ) );
 
 		$sections["support"] = array( "title"  => __( "Support", "business-hours" ),
 		                              "fields" => array( "mzaweb" => array( "title" => __( "Bugs? Questions? Suggestions?", "business-hours" ),

@@ -1,14 +1,14 @@
 <?php
 
-add_action( 'widgets_init', 'WorkingHoursWidget_load' );
-function WorkingHoursWidget_load() {
-	register_widget( 'WorkingHoursWidget' );
+add_action( 'widgets_init', 'BusinessHoursWidget_load' );
+function BusinessHoursWidget_load() {
+	register_widget( 'BusinessHoursWidget' );
 }
 
 
-class WorkingHoursWidget extends WP_Widget {
+class BusinessHoursWidget extends WP_Widget {
 
-	function WorkingHoursWidget() {
+	function BusinessHoursWidget() {
 
 		$widget_ops = array( 'classname'   => 'workinghourswidget',
 		                     'description' => __( 'Shows your business hours by day', "business-hours" ) );
