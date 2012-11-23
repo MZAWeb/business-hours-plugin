@@ -22,11 +22,21 @@ class BusinessHoursSettings {
 		add_action( 'admin_menu', array( $this, 'add_settings_page' ) );
 	}
 
-	public function get_business_hours() {
+	public function get_business_hours( $day = null, $key = null ) {
 		if ( empty( $this->cache ) )
 			$this->cache = get_option( self::PRE_20_SETTINGS );
 
-		return $this->cache;
+		if ( !$day )
+			return $this->cache;
+
+		if ( empty( $this->cache[$day] ) )
+			return null;
+
+		if ( !$key )
+			return $this->cache[$day];
+
+		return $this->cache[$day][$key];
+
 	}
 
 	private function load_settings() {
@@ -89,6 +99,7 @@ class BusinessHoursSettings {
 			$this->cache[$id]['working'] = $working;
 		}
 
+		$this->save_settings();
 
 	}
 

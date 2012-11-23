@@ -54,9 +54,9 @@ class BusinessHours {
 
 		$id = key( $day );
 
-		$open    = $this->settings->get_setting( $id, "open" );
-		$close   = $this->settings->get_setting( $id, "close" );
-		$working = $this->settings->get_setting( $id, "working" );
+		$open    = $this->settings()->get_business_hours( $id, "open" );
+		$close   = $this->settings()->get_business_hours( $id, "close" );
+		$working = $this->settings()->get_business_hours( $id, "working" );
 
 		if ( $working === "true" ) {
 			$content = str_replace( "{{TodayOpen}}", $open, $content );
@@ -173,10 +173,10 @@ class BusinessHours {
 		$id       = key( $day );
 		$day_name = $day[$id];
 
-		$open        = apply_filters( "business-hours-open-hour", business_hours()->settings->get_setting( $id, "open" ), $id );
-		$close       = apply_filters( "business-hours-close-hour", business_hours()->settings->get_setting( $id, "close" ), $id );
+		$open        = apply_filters( "business-hours-open-hour", business_hours()->settings()->get_business_hours( $id, "open" ), $id );
+		$close       = apply_filters( "business-hours-close-hour", business_hours()->settings()->get_business_hours( $id, "close" ), $id );
 		$closed_text = apply_filters( "business-hours-closed-text", __( "Closed", "business-hours" ) );
-		$working     = apply_filters( "business-hours-is-open-today", business_hours()->settings->get_setting( $id, "working" ), $id );
+		$working     = apply_filters( "business-hours-is-open-today", business_hours()->settings()->get_business_hours( $id, "working" ), $id );
 
 		$is_open_today = ( strtolower( $working ) === "true" ) ? true : false;
 
@@ -204,74 +204,7 @@ class BusinessHours {
 	 *
 	 */
 	private function _register_settings() {
-
 		$this->settings = new BusinessHoursSettings();
-
-		return;
-
-		$days     = $this->_get_week_days();
-		$sections = array();
-
-		foreach ( $days as $day ) {
-			$id            = key( $day );
-			$name          = $day[$id];
-			$sections[$id] = array( "title"  => $name,
-			                        "business-hours",
-			                        "fields" => array( "working" => array( "title"   => sprintf( __( "Is it open on %s?", "business-hours" ), $name ),
-			                                                               "type"    => "checkbox",
-			                                                               "options" => array( "true" => "" ) ),
-			                                           "open"    => array( "title"       => __( "Open", "business-hours" ) . ":",
-			                                                               "type"        => "time",
-			                                                               "description" => "HH:MM"
-
-			                                           ),
-			                                           "close"   => array( "title"       => __( "Close", "business-hours" ) . ":",
-			                                                               "type"        => "time",
-			                                                               "description" => "HH:MM"
-
-			                                           ) ) );
-
-		}
-
-		$sections["exceptions"] = array( "title"  => __( "Exceptions", "business-hours" ),
-		                                 "fields" => array( "mzaweb" => array( "title" => __( "Bugs? Questions? Suggestions?", "business-hours" ),
-		                                                                       "type"  => "support",
-		                                                                       "email" => "support@mzaweb.com" ) ) );
-
-		$sections["support"] = array( "title"  => __( "Support", "business-hours" ),
-		                              "fields" => array( "mzaweb" => array( "title" => __( "Bugs? Questions? Suggestions?", "business-hours" ),
-		                                                                    "type"  => "support",
-		                                                                    "email" => "support@mzaweb.com" ) ) );
-
-		$this->settings                    = new MZASettings( "working-hours", 'options-general.php', $sections );
-		$this->settings->settingsPageTitle = __( "Business Hours Settings", "business-hours" );
-		$this->settings->settingsLinkTitle = __( "Business Hours", "business-hours" );
-
-		$this->settings->customJS .= "jQuery('#working-hours_settings_form input:checkbox').each(function() {
-            index = jQuery(this).index('#working-hours_settings_form input:checkbox') * 2;
-
-            if (this.checked){
-
-                jQuery('.field-row-time').eq(index).show();
-                jQuery('.field-row-time').eq(index+1).show();
-            }else{
-                jQuery('.field-row-time').eq(index).hide();
-                jQuery('.field-row-time').eq(index+1).hide();
-            }
-        });";
-
-		$this->settings->customJS .= "jQuery('#working-hours_settings_form input:checkbox').change(function() {
-            index = jQuery(this).index('#working-hours_settings_form input:checkbox') * 2;
-
-            if (this.checked){
-
-                jQuery('.field-row-time').eq(index).show();
-                jQuery('.field-row-time').eq(index+1).show();
-            }else{
-                jQuery('.field-row-time').eq(index).hide();
-                jQuery('.field-row-time').eq(index+1).hide();
-            }
-        });";
 	}
 
 	/**
