@@ -100,8 +100,8 @@ class BusinessHours {
 
 		if ( get_option( 'timezone_string' ) ) {
 			$zone      = new DateTimeZone( get_option( 'timezone_string' ) );
-			$timestamp = new DateTime( 'now', $zone );
-			$timestamp = strtotime( $timestamp->date );
+			$datetime  = new DateTime( 'now', $zone );
+			$timestamp = time() + $datetime->getOffset();
 		} else {
 			$offset    = get_option( 'gmt_offset' );
 			$offset    = $offset * 60 * 60;
