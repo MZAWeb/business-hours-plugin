@@ -38,14 +38,14 @@ class BusinessHoursWidget extends WP_Widget {
 		$id   = key( $day );
 		$name = $day[$id];
 
-		$open    = esc_html( business_hours()->settings()->get_open_hour( $id ) );
-		$close   = esc_html( business_hours()->settings()->get_close_hour( $id ) );
-		$working = business_hours()->settings()->get_business_hours( $id, "working" );
+		$open          = esc_html( business_hours()->settings()->get_open_hour( $id ) );
+		$close         = esc_html( business_hours()->settings()->get_close_hour( $id ) );
+		$is_open_today = business_hours()->settings()->is_open( $id );
 
 		echo $before_widget;
 		echo $before_title . $title . $after_title;
 
-		if ( $working == "true" ) {
+		if ( $is_open_today ) {
 			$template = $instance['template_hours'];
 			$template = str_replace( "{{Open}}", $open, $template );
 			$template = str_replace( "{{Close}}", $close, $template );
@@ -87,10 +87,12 @@ class BusinessHoursWidget extends WP_Widget {
 
 	function form( $instance ) {
 
+		$closed_text = business_hours()->settings()->get_default_closed_text();
+
 		$defaults = array( 'title'           => "Business Hours",
 		                   'template_today'  => "<div class='working_hours_title'>" . __( "Business hours on", "business-hours" ) . " {{Day}}</div>",
 		                   'template_hours'  => "<span class='working_hours_open'>{{Open}}</span> - <span class='working_hours_close'>{{Close}}</span>",
-		                   'template_closed' => "<div class='working_hours_closed'>" . __( "Closed", "business-hours" ) . "</div>",
+		                   'template_closed' => "<div class='working_hours_closed'>" . $closed_text . "</div>",
 		                   'allweek'         => 0,
 		                   'collapsible'     => 1 );
 

@@ -49,6 +49,17 @@ class BusinessHoursSettings {
 		return $close;
 	}
 
+	public function is_open( $day ) {
+		$open    = $this->get_open_hour( $day );
+		$close   = $this->get_close_hour( $day );
+		$is_open = !empty( $open ) && !empty( $close );
+		return apply_filters( 'business-hours-is-open-today', $is_open, $day );
+	}
+
+	public function get_default_closed_text() {
+		return apply_filters( "business-hours-closed-text", __( "Closed", "business-hours" ) );
+	}
+
 	private function load_settings() {
 		$this->cache = get_option( BusinessHoursSettings::PRE_20_SETTINGS );
 	}
@@ -96,17 +107,15 @@ class BusinessHoursSettings {
 
 		foreach ( $days as $day ) {
 			$id   = key( $day );
-			$open = $close = $working = '';
+			$open = $close = '';
 
 			if ( !empty( $_POST['open_' . $id] ) && !empty( $_POST['close_' . $id] ) ) {
 				$open    = sanitize_text_field( ( $_POST['open_' . $id] ) );
 				$close   = sanitize_text_field( ( $_POST['close_' . $id] ) );
-				$working = 'true';
 			}
 
 			$this->cache[$id]['open']    = $open;
 			$this->cache[$id]['close']   = $close;
-			$this->cache[$id]['working'] = $working;
 		}
 
 		$this->save_settings();

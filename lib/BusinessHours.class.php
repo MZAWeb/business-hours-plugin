@@ -45,21 +45,21 @@ class BusinessHours {
 	 */
 	public function shortcode( $atts, $content = null ) {
 
-		extract( shortcode_atts( array( 'closed'      => 'Closed' ), $atts ) );
+		$closed_text = business_hours()->settings()->get_default_closed_text();
+
+		extract( shortcode_atts( array( 'closed' => $closed_text ), $atts ) );
 
 		if ( empty( $content ) )
 			return $content;
 
 		$day = $this->get_day_using_timezone();
+		$id  = key( $day );
 
-		$id = key( $day );
+		$open          = esc_html( business_hours()->settings()->get_open_hour( $id ) );
+		$close         = esc_html( business_hours()->settings()->get_close_hour( $id ) );
+		$is_open_today = business_hours()->settings()->is_open( $id );
 
-		$open    = esc_html( business_hours()->settings()->get_open_hour( $id ) );
-		$close   = esc_html( business_hours()->settings()->get_close_hour( $id ) );
-
-		$working = apply_filters( "business-hours-is-open-today", business_hours()->settings()->get_business_hours( $id, "working" ), $id );
-
-		if ( $working === "true" ) {
+		if ( $is_open_today ) {
 			$content = str_replace( "{{TodayOpen}}", $open, $content );
 			$content = str_replace( "{{TodayClose}}", $close, $content );
 		} else {
@@ -174,13 +174,10 @@ class BusinessHours {
 		$id       = key( $day );
 		$day_name = $day[$id];
 
-		$open    = esc_html( business_hours()->settings()->get_open_hour( $id ) );
-		$close   = esc_html( business_hours()->settings()->get_close_hour( $id ) );
-
-		$closed_text = apply_filters( "business-hours-closed-text", __( "Closed", "business-hours" ) );
-		$working     = apply_filters( "business-hours-is-open-today", business_hours()->settings()->get_business_hours( $id, "working" ), $id );
-
-		$is_open_today = ( strtolower( $working ) === "true" ) ? true : false;
+		$open          = esc_html( business_hours()->settings()->get_open_hour( $id ) );
+		$close         = esc_html( business_hours()->settings()->get_close_hour( $id ) );
+		$is_open_today = business_hours()->settings()->is_open( $id );
+		$closed_text   = business_hours()->settings()->get_default_closed_text();
 
 		include business_hours()->locate_view( 'table-row.php' );
 
