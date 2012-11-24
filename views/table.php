@@ -12,8 +12,8 @@
 			<th class='business_hours_table_heading'><?php _e( "Close", "business-hours" );?></th>
 		</tr>
 		<?php
-		foreach ( $days as $day ) {
-			$this->_table_row( $day );
+		foreach ( $days as $id => $day ) {
+			$this->_table_row( $id, $day );
 		}
 		?>
 

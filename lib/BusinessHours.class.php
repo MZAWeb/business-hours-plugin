@@ -108,7 +108,7 @@ class BusinessHours {
 			$timestamp = time() + $offset;
 		}
 
-		$arr = array( strtolower( gmdate( 'l', $timestamp ) )  => ucwords( date_i18n( 'l', $timestamp ) ) );
+		$arr = array( strtolower( gmdate( 'w', $timestamp ) )  => ucwords( date_i18n( 'l', $timestamp ) ) );
 		return $arr;
 	}
 
@@ -118,15 +118,30 @@ class BusinessHours {
 	 *
 	 * @return array
 	 */
-	public function get_week_days() {
+	public function get_week_days_old() {
+
+		browser()->timer('get_week_days');
 		$timestamp = strtotime( 'next Sunday' );
 		$days      = array();
 		for ( $i = 0; $i < 7; $i++ ) {
 			$days[]    = array( strtolower( gmdate( 'l', $timestamp ) )  => ucwords( date_i18n( 'l', $timestamp ) ) );
 			$timestamp = strtotime( '+1 day', $timestamp );
 		}
+		browser()->timer('get_week_days', true);
 		return $days;
 	}
+
+	/**
+	 *
+	 * Get the internationalized days names
+	 *
+	 * @return array
+	 */
+	public function get_week_days() {
+		global $wp_locale;
+		return $wp_locale->weekday;
+	}
+
 
 	/**
 	 * Echo the table with the open/close hours for each day of the week
@@ -161,7 +176,8 @@ class BusinessHours {
 	 *
 	 * Echo the row for the given day for the hours table.
 	 *
-	 * @param $day
+	 * @param $id
+	 * @param $day_name
 	 *
 	 * @filter business-hours-closed-text
 	 * @filter business-hours-open-hour
@@ -169,10 +185,8 @@ class BusinessHours {
 	 * @filter business-hours-is-open-today
 	 *
 	 */
-	private function _table_row( $day ) {
+	private function _table_row( $id, $day_name ) {
 		$ret      = "";
-		$id       = key( $day );
-		$day_name = $day[$id];
 
 		$open          = esc_html( business_hours()->settings()->get_open_hour( $id ) );
 		$close         = esc_html( business_hours()->settings()->get_close_hour( $id ) );
