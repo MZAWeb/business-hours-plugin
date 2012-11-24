@@ -26,13 +26,13 @@ class BusinessHoursSettings {
 		if ( empty( $this->cache ) )
 			$this->cache = get_option( self::PRE_20_SETTINGS );
 
-		if ( !$day )
+		if ( $day === null )
 			return $this->cache;
 
 		if ( empty( $this->cache[$day] ) )
 			return null;
 
-		if ( !$key )
+		if ( $key === null )
 			return $this->cache[$day];
 
 		return $this->cache[$day][$key];
@@ -104,9 +104,7 @@ class BusinessHoursSettings {
 
 		$days = business_hours()->get_week_days();
 
-
-		foreach ( $days as $day ) {
-			$id   = key( $day );
+		foreach ( $days as $id => $day ) {
 			$open = $close = '';
 
 			if ( !empty( $_POST['open_' . $id] ) && !empty( $_POST['close_' . $id] ) ) {
@@ -127,8 +125,8 @@ class BusinessHoursSettings {
 
 	private function _show_days_controls() {
 		$days = business_hours()->get_week_days();
-		foreach ( $days as $day ) {
-			$this->_show_day_controls( esc_attr( key( $day ) ), esc_html( $day[key( $day )] ) );
+		foreach ( $days as $id => $day ) {
+			$this->_show_day_controls($id, esc_html( $day ) );
 		}
 	}
 
