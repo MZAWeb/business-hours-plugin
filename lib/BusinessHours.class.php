@@ -120,7 +120,19 @@ class BusinessHours {
 	 */
 	public function get_week_days() {
 		global $wp_locale;
-		return $wp_locale->weekday;
+
+		$days          = $wp_locale->weekday;
+		$start_of_week = get_option( 'start_of_week' );
+
+		if ( !$start_of_week )
+			return $days;
+
+		$first  = array_slice( $days, 0, $start_of_week, true );
+		$second = array_slice( $days, $start_of_week, count( $days ), true );
+
+		$days =  $second + $first;
+
+		return $days;
 	}
 
 
@@ -167,7 +179,7 @@ class BusinessHours {
 	 *
 	 */
 	private function _table_row( $id, $day_name ) {
-		$ret      = "";
+		$ret = "";
 
 		$open          = esc_html( business_hours()->settings()->get_open_hour( $id ) );
 		$close         = esc_html( business_hours()->settings()->get_close_hour( $id ) );
