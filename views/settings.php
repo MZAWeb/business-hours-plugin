@@ -3,7 +3,7 @@
 	<h2><?php _e( 'Business Hours', 'business-hours' ) ?></h2>
 	<br/>
 
-	<form id="bh-form" action="" method="post">
+	<form id="bh-form" class="bh-form" action="" method="post">
 
 		<input type='hidden' name='page' value='<?php echo BusinessHours::SLUG; ?>'/>
 		<input type="hidden" name="action" value="update"/>
@@ -32,11 +32,10 @@
 							</tbody>
 						</table>
 					</div>
-					<div>
-						<button type="submit">Submit</button>
-					</div>
 				</td>
 			</tr>
 		</table>
+		<p class="submit"><input type="submit" name="submit" id="submit" class="button button-primary"
+		                         value="<?php _e( 'Save Changes' );?>"></p>
 	</form>
 </div>
