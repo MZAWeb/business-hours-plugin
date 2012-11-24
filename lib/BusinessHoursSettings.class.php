@@ -39,6 +39,16 @@ class BusinessHoursSettings {
 
 	}
 
+	public function get_open_hour( $day ) {
+		$open = apply_filters( "business-hours-open-hour", $this->get_business_hours( $day, "open" ), $day );
+		return $open;
+	}
+
+	public function get_close_hour( $day ) {
+		$close = apply_filters( "business-hours-close-hour", $this->get_business_hours( $day, "close" ), $day );
+		return $close;
+	}
+
 	private function load_settings() {
 		$this->cache = get_option( BusinessHoursSettings::PRE_20_SETTINGS );
 	}

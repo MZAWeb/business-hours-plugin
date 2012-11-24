@@ -38,8 +38,8 @@ class BusinessHoursWidget extends WP_Widget {
 		$id   = key( $day );
 		$name = $day[$id];
 
-		$open    = esc_html( business_hours()->settings()->get_business_hours( $id, "open" ) );
-		$close   = esc_html( business_hours()->settings()->get_business_hours( $id, "close" ) );
+		$open    = esc_html( business_hours()->settings()->get_open_hour( $id ) );
+		$close   = esc_html( business_hours()->settings()->get_close_hour( $id ) );
 		$working = business_hours()->settings()->get_business_hours( $id, "working" );
 
 		echo $before_widget;
