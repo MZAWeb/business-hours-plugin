@@ -54,9 +54,10 @@ class BusinessHours {
 
 		$id = key( $day );
 
-		$open    = $this->settings()->get_business_hours( $id, "open" );
-		$close   = $this->settings()->get_business_hours( $id, "close" );
-		$working = $this->settings()->get_business_hours( $id, "working" );
+		$open    = esc_html( business_hours()->settings()->get_open_hour( $id ) );
+		$close   = esc_html( business_hours()->settings()->get_close_hour( $id ) );
+
+		$working = apply_filters( "business-hours-is-open-today", business_hours()->settings()->get_business_hours( $id, "working" ), $id );
 
 		if ( $working === "true" ) {
 			$content = str_replace( "{{TodayOpen}}", $open, $content );
@@ -173,8 +174,9 @@ class BusinessHours {
 		$id       = key( $day );
 		$day_name = $day[$id];
 
-		$open        = apply_filters( "business-hours-open-hour", business_hours()->settings()->get_business_hours( $id, "open" ), $id );
-		$close       = apply_filters( "business-hours-close-hour", business_hours()->settings()->get_business_hours( $id, "close" ), $id );
+		$open    = esc_html( business_hours()->settings()->get_open_hour( $id ) );
+		$close   = esc_html( business_hours()->settings()->get_close_hour( $id ) );
+
 		$closed_text = apply_filters( "business-hours-closed-text", __( "Closed", "business-hours" ) );
 		$working     = apply_filters( "business-hours-is-open-today", business_hours()->settings()->get_business_hours( $id, "working" ), $id );
 
