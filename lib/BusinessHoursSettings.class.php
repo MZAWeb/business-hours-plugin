@@ -140,4 +140,8 @@ class BusinessHoursSettings {
 
 	}
 
+	private function _show_support_form() {
+		include business_hours()->locate_view( 'support.php' );
+	}
+
 }

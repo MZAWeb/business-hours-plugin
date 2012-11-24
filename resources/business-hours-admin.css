@@ -37,3 +37,30 @@
 .bh-form textarea {
 	resize : none
 }
+
+.bh_main_container {
+	float : left;
+}
+
+.bh_support_container {
+	width      : 250px;
+	float      : right;
+	margin-top : 15px;
+	padding-right: 30px;
+}
+
+.bh_clear {
+	display : block;
+	clear   : both;
+}
+
+@media screen and (max-width:690px) {
+	.bh_main_container {
+		float : none;
+	}
+
+	.bh_support_container {
+		display: none;
+	}
+
+}
