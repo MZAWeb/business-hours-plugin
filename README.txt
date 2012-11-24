@@ -83,8 +83,11 @@ to have the list collapsed by default and a link to open it.
 * Enhancement: Allow users to overide views templates
 * Enhancement: Allow to show the hours table fixed in the widget (without collapsible)
 * Enhancement: Cleanup widget admin. Hide templating fields. Clarify some texts.
+* Enhancement: Cleanup settings admin. Sexier and more intuitive.
 * Enhancement: Make it work with WordPress 3.5
 * General cleaning and improve architecture.
+* Improve code quality ( a lot! )
+* Improve loading speed
 
 = 1.3.2 =
 * Fixed how the plugin handles weekdays names localization

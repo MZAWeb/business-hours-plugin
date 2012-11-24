@@ -118,25 +118,6 @@ class BusinessHours {
 	 *
 	 * @return array
 	 */
-	public function get_week_days_old() {
-
-		browser()->timer('get_week_days');
-		$timestamp = strtotime( 'next Sunday' );
-		$days      = array();
-		for ( $i = 0; $i < 7; $i++ ) {
-			$days[]    = array( strtolower( gmdate( 'l', $timestamp ) )  => ucwords( date_i18n( 'l', $timestamp ) ) );
-			$timestamp = strtotime( '+1 day', $timestamp );
-		}
-		browser()->timer('get_week_days', true);
-		return $days;
-	}
-
-	/**
-	 *
-	 * Get the internationalized days names
-	 *
-	 * @return array
-	 */
 	public function get_week_days() {
 		global $wp_locale;
 		return $wp_locale->weekday;
