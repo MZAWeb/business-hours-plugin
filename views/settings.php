@@ -36,14 +36,16 @@
 					</td>
 				</tr>
 			</table>
+			<p class="submit"><input type="submit" name="submit" id="submit" class="button button-primary"
+			                         value="<?php _e( 'Save Changes' );?>"></p>
+		</form>
 	</div>
+
 	<div class="bh_support_container">
 		<?php $this->_show_support_form(); ?>
 	</div>
 
 	<div class="bh_clear"></div>
 
-	<p class="submit"><input type="submit" name="submit" id="submit" class="button button-primary"
-	                         value="<?php _e( 'Save Changes' );?>"></p>
-	</form>
+
 </div>
