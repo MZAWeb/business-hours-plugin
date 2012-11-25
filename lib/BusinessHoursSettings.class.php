@@ -23,6 +23,13 @@ class BusinessHoursSettings {
 		$this->_load_settings();
 
 		add_action( 'admin_menu', array( $this, 'add_settings_page' ) );
+
+		add_filter( 'business-hours-save-settings', array( $this, 'maybe_save_settings_hours' ), 1 );
+		add_filter( 'business-hours-save-settings', array( $this, 'maybe_save_settings_exceptions' ), 2 );
+
+		add_action( 'business-hours-settings-page', array( $this, 'show_days_settings' ), 1 );
+		add_action( 'business-hours-settings-page', array( $this, 'show_exceptions_settings' ), 2 );
+
 	}
 
 
@@ -64,7 +71,11 @@ class BusinessHoursSettings {
 
 		$this->_maybe_save_settings();
 
+		business_hours()->log( $this->cache );
+
 		include business_hours()->locate_view( 'settings.php', false );
+
+
 	}
 
 	private function _maybe_save_settings() {
@@ -77,6 +88,14 @@ class BusinessHoursSettings {
 
 		$this->cache = array();
 
+		$this->cache = apply_filters( 'business-hours-save-settings', $this->cache );
+
+		$this->_save_settings();
+
+	}
+
+	public function maybe_save_settings_hours( $cache ) {
+
 		$days = business_hours()->get_week_days();
 
 		foreach ( $days as $id => $day ) {
@@ -87,11 +106,17 @@ class BusinessHoursSettings {
 				$close = sanitize_text_field( ( $_POST['close_' . $id] ) );
 			}
 
-			$this->cache[self::SETTING_HOURS][$id]['open']  = $open;
-			$this->cache[self::SETTING_HOURS][$id]['close'] = $close;
+			$cache[self::SETTING_HOURS][$id]['open']  = $open;
+			$cache[self::SETTING_HOURS][$id]['close'] = $close;
 		}
 
-		$this->_save_settings();
+		return $cache;
+
+	}
+
+	public function maybe_save_settings_exceptions( $cache ) {
+
+		return $cache;
 
 	}
 
@@ -122,6 +147,10 @@ class BusinessHoursSettings {
 		return $this->cache[self::SETTING_HOURS][$day][$key];
 	}
 
+	public function show_days_settings() {
+		include business_hours()->locate_view( 'settings-days.php' );
+	}
+
 	private function _show_days_controls() {
 		$days = business_hours()->get_week_days();
 		foreach ( $days as $id => $day ) {
@@ -137,8 +166,12 @@ class BusinessHoursSettings {
 
 	}
 
+	public function show_exceptions_settings() {
+		include business_hours()->locate_view( 'settings-exceptions.php' );
+	}
+
 	private function _show_support_form() {
-		include business_hours()->locate_view( 'support.php' );
+		include business_hours()->locate_view( 'settings-support.php' );
 	}
 
 	private function _show_exception_days() {
@@ -175,11 +208,11 @@ class BusinessHoursSettings {
 
 	private function _show_exceptions() {
 		$exception_number = 0;
-		include business_hours()->locate_view( 'exception.php', false );
+		include business_hours()->locate_view( 'settings-single-exception.php', false );
 	}
 
 	private function _show_exceptions_instructions() {
 		$exception_number = 0;
-		include business_hours()->locate_view( 'exception-instructions.php' );
+		include business_hours()->locate_view( 'settings-exception-instructions.php' );
 	}
 }
