@@ -64,9 +64,6 @@ class BusinessHoursSettings {
 
 		$this->_maybe_save_settings();
 
-		if ( function_exists( 'browser' ) && is_callable( array( 'Browser', 'instance' ) ) )
-			browser()->log( $this->cache );
-
 		include business_hours()->locate_view( 'settings.php', false );
 	}
 
