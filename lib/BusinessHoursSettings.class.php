@@ -40,6 +40,13 @@ class BusinessHoursSettings {
 		return $close;
 	}
 
+	public function get_full_settings() {
+		if ( empty( $this->cache ) )
+			$this->_load_settings();
+
+		return $this->cache;
+	}
+
 	public function is_open( $day ) {
 		$open    = $this->get_open_hour( $day );
 		$close   = $this->get_close_hour( $day );
