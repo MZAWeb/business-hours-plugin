@@ -87,6 +87,26 @@ class BusinessHoursSetIntersection extends BusinessHoursSet {
 		return true;
 	}
 
+}
+
+
+class BusinessHoursSetUnion extends BusinessHoursSet {
+
+	public function __call( $method, $arguments ) {
+
+		if ( !method_exists( $this->_setInterface, $method ) ) {
+			throw new Exception( "$method is not defined in $this->_setInterface" );
+		}
+
+		if ( empty( $this->_elements ) )
+			return false;
+
+		foreach ( $this->_elements as $element )
+			if ( call_user_func_array( array( $element, $method ), $arguments ) )
+				return true;
+
+		return false;
+	}
 
 }
 
@@ -110,7 +130,7 @@ abstract class BusinessHoursSet {
 	}
 
 	public function addElement( $element ) {
-		if ( $element instanceof $this->_setInterface || $element instanceof Celsus_Set_Operation_Abstract ) {
+		if ( $element instanceof $this->_setInterface || $element instanceof BusinessHoursSet ) {
 			$this->_elements[] = $element;
 		} else {
 			throw new Exception( "Element must implement $this->_setInterface or Set" );
