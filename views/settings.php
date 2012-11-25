@@ -3,6 +3,8 @@
 	<h2><?php _e( 'Business Hours', 'business-hours' ) ?></h2>
 	<br/>
 
+	<?php $this->_maybe_show_updated_notice(); ?>
+
 	<div class="bh_main_container">
 		<form id="bh-form" class="bh-form" action="" method="post">
 
