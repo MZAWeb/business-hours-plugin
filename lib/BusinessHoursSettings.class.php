@@ -5,8 +5,11 @@ if ( class_exists( 'BusinessHoursSettings' ) )
 
 class BusinessHoursSettings {
 
-	const SETTINGS        = 'business_hours_settings';
-	const PRE_20_SETTINGS = 'working-hours_settings';
+	const SETTINGS           = 'business_hours_settings';
+	const PRE_20_SETTINGS    = 'working-hours_settings';
+	const SETTING_HOURS      = 'hours';
+	const SETTING_EXCEPTIONS = 'exceptions';
+
 
 	private $cache = false;
 	private $page;
@@ -17,35 +20,19 @@ class BusinessHoursSettings {
 		$this->path = trailingslashit( dirname( dirname( __FILE__ ) ) );
 		$this->url  = trailingslashit( dirname( plugins_url( '', __FILE__ ) ) );
 
-		$this->load_settings();
+		$this->_load_settings();
 
 		add_action( 'admin_menu', array( $this, 'add_settings_page' ) );
 	}
 
-	public function get_business_hours( $day = null, $key = null ) {
-		if ( empty( $this->cache ) )
-			$this->cache = get_option( self::PRE_20_SETTINGS );
-
-		if ( $day === null )
-			return $this->cache;
-
-		if ( empty( $this->cache[$day] ) )
-			return null;
-
-		if ( $key === null )
-			return $this->cache[$day];
-
-		return $this->cache[$day][$key];
-
-	}
 
 	public function get_open_hour( $day ) {
-		$open = apply_filters( "business-hours-open-hour", $this->get_business_hours( $day, "open" ), $day );
+		$open = apply_filters( "business-hours-open-hour", $this->_get_business_hours( $day, "open" ), $day );
 		return $open;
 	}
 
 	public function get_close_hour( $day ) {
-		$close = apply_filters( "business-hours-close-hour", $this->get_business_hours( $day, "close" ), $day );
+		$close = apply_filters( "business-hours-close-hour", $this->_get_business_hours( $day, "close" ), $day );
 		return $close;
 	}
 
@@ -58,14 +45,6 @@ class BusinessHoursSettings {
 
 	public function get_default_closed_text() {
 		return apply_filters( "business-hours-closed-text", __( "Closed", "business-hours" ) );
-	}
-
-	private function load_settings() {
-		$this->cache = get_option( BusinessHoursSettings::PRE_20_SETTINGS );
-	}
-
-	private function save_settings() {
-		update_option( BusinessHoursSettings::PRE_20_SETTINGS, $this->cache );
 	}
 
 	/**** ADMIN PAGE ****/
@@ -83,12 +62,15 @@ class BusinessHoursSettings {
 
 	public function do_settings_page() {
 
-		$this->maybe_save_settings();
+		$this->_maybe_save_settings();
+
+		if ( function_exists( 'browser' ) && is_callable( array( 'Browser', 'instance' ) ) )
+			browser()->log( $this->cache );
 
 		include business_hours()->locate_view( 'settings.php', false );
 	}
 
-	private function maybe_save_settings() {
+	private function _maybe_save_settings() {
 
 		if ( empty( $_POST['action'] ) || $_POST['action'] != 'update' )
 			return;
@@ -108,16 +90,40 @@ class BusinessHoursSettings {
 				$close = sanitize_text_field( ( $_POST['close_' . $id] ) );
 			}
 
-			$this->cache[$id]['open']  = $open;
-			$this->cache[$id]['close'] = $close;
+			$this->cache[self::SETTING_HOURS][$id]['open']  = $open;
+			$this->cache[self::SETTING_HOURS][$id]['close'] = $close;
 		}
 
-		$this->save_settings();
+		$this->_save_settings();
 
 	}
 
 
 	/***** HELPERS *****/
+
+	private function _load_settings() {
+		$this->cache = get_option( BusinessHoursSettings::SETTINGS );
+	}
+
+	private function _save_settings() {
+		update_option( BusinessHoursSettings::SETTINGS, $this->cache );
+	}
+
+	private function _get_business_hours( $day = null, $key = null ) {
+		if ( empty( $this->cache ) )
+			$this->_load_settings();
+
+		if ( $day === null )
+			return $this->cache;
+
+		if ( empty( $this->cache[self::SETTING_HOURS][$day] ) )
+			return null;
+
+		if ( $key === null )
+			return $this->cache[$day];
+
+		return $this->cache[self::SETTING_HOURS][$day][$key];
+	}
 
 	private function _show_days_controls() {
 		$days = business_hours()->get_week_days();
@@ -127,8 +133,8 @@ class BusinessHoursSettings {
 	}
 
 	private function _show_day_controls( $id, $name ) {
-		$open  = ( !empty( $this->cache[$id]['open'] ) ) ? $this->cache[$id]['open'] : '';
-		$close = ( !empty( $this->cache[$id]['close'] ) ) ? $this->cache[$id]['close'] : '';
+		$open  = $this->get_open_hour( $id );
+		$close = $this->get_close_hour( $id );
 
 		include business_hours()->locate_view( 'settings-single-day.php', false );
 
