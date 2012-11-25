@@ -24,11 +24,8 @@ class BusinessHoursSettings {
 
 		add_action( 'admin_menu', array( $this, 'add_settings_page' ) );
 
-		add_filter( 'business-hours-save-settings', array( $this, 'maybe_save_settings_hours' ), 1 );
-		add_filter( 'business-hours-save-settings', array( $this, 'maybe_save_settings_exceptions' ), 2 );
-
 		add_action( 'business-hours-settings-page', array( $this, 'show_days_settings' ), 1 );
-		add_action( 'business-hours-settings-page', array( $this, 'show_exceptions_settings' ), 2 );
+		add_filter( 'business-hours-save-settings', array( $this, 'maybe_save_settings_hours' ), 1 );
 
 	}
 
@@ -116,31 +113,6 @@ class BusinessHoursSettings {
 
 	}
 
-	public function maybe_save_settings_exceptions( $cache ) {
-
-		$cache[self::SETTING_EXCEPTIONS] = array();
-
-		if ( empty( $_POST['exception_day'] ) )
-			return $cache;
-
-		$days   = $_POST['exception_day'];
-		$months = $_POST['exception_month'];
-		$year   = $_POST['exception_year'];
-		$open   = $_POST['exception_open'];
-		$close  = $_POST['exception_close'];
-
-		/* The first one is the model jQuery uses to clone.
-		 * It's invisible to the user and we dont' care about it
-		 */
-		array_shift( $days );
-
-		/* No exceptions */
-		if ( empty( $days ) )
-			return $cache;
-
-
-		return $cache;
-	}
 
 
 	/***** HELPERS *****/
@@ -198,55 +170,8 @@ class BusinessHoursSettings {
 
 	}
 
-	public function show_exceptions_settings() {
-		include business_hours()->locate_view( 'settings-exceptions.php' );
-	}
-
 	private function _show_support_form() {
 		include business_hours()->locate_view( 'settings-support.php' );
 	}
 
-	private function _show_exception_days() {
-		echo sprintf( '<option value="%s">%s</option>', 'every', __( 'Every day', 'business-hours' ) );
-		echo sprintf( '<option value="%s">%s</option>', 'monfri', __( 'Mondays to Fridays', 'business-hours' ) );
-		echo sprintf( '<option value="%s">%s</option>', 'satsun', __( 'Saturdays and Sundays', 'business-hours' ) );
-
-		for ( $i = 1; $i < 32; $i++ ) {
-			echo sprintf( '<option value="%1$d">%1$d</option>', $i );
-		}
-	}
-
-	private function _show_exception_months() {
-		echo sprintf( '<option value="%s">%s</option>', 'every', __( 'Every month', 'business-hours' ) );
-
-		global $wp_locale;
-
-		foreach ( $wp_locale->month as $id => $month ) {
-			echo sprintf( '<option value="%d">%s</option>', $id, $month );
-		}
-
-	}
-
-	private function _show_exception_years() {
-
-		echo sprintf( '<option value="%s">%s</option>', 'every', __( 'Every year', 'business-hours' ) );
-
-		$this_year = date( 'Y', time() );
-		$limit     = apply_filters( 'business-hours-exceptions-how-many-years', 10 );
-
-		for ( $i = 0; $i < $limit; $i++ ) {
-			echo sprintf( '<option value="%d">%s</option>', $this_year, $this_year );
-			$this_year++;
-		}
-	}
-
-	private function _show_exceptions() {
-		$exception_number = 0;
-		include business_hours()->locate_view( 'settings-exception-single.php', false );
-	}
-
-	private function _show_exceptions_instructions() {
-		$exception_number = 0;
-		include business_hours()->locate_view( 'settings-exception-instructions.php' );
-	}
 }

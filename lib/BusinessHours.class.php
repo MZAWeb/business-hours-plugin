@@ -24,6 +24,9 @@ class BusinessHours {
 		$this->_register_settings();
 		$this->_register_shortcodes();
 
+		if ( class_exists( 'BusinessHoursExceptions' ) )
+			BusinessHoursExceptions::instance();
+
 		// see https://github.com/MZAWeb/wp-log-in-browser
 		add_filter( 'wplinb-match-wp-debug', '__return_true' );
 	}
