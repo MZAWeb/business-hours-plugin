@@ -8,5 +8,7 @@
 		<li><?php _e( '<a href="https://github.com/MZAWeb/business-hours-plugin/wiki">Documentation</a>', 'business-hours' ); ?></li>			<li><?php _e( '<a href="http://twitter.com/MZAWeb">Tweet to me</a>', 'business-hours' ); ?></li>
 		<li><?php _e( '<a href="http://danieldvork.in">My blog</a>', 'business-hours' ); ?></li>
 		<li><?php _e( '<a href="http://mzaweb.com">MZAWeb - WordPress Development</a>', 'business-hours' ); ?></li>
+		<li><br/></li>
+		<li><?php _e( 'I promise to keep this plugin free for ever. If it makes you happy and you want to make me happy, you can donate a few bucks to me via PayPal at daniel@mzaweb.com', 'business-hours' ); ?></li>
 	</ul>
 </div>
