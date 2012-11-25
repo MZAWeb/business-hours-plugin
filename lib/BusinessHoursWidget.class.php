@@ -98,7 +98,7 @@ class BusinessHoursWidget extends WP_Widget {
 
 		$instance = wp_parse_args( (array)$instance, $defaults );
 
-		include business_hours()->locate_view( 'widget-admin.php' );
+		include business_hours()->locate_view( 'widget-admin.php', false );
 
 	}
 }

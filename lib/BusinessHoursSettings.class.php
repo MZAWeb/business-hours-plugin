@@ -85,7 +85,7 @@ class BusinessHoursSettings {
 
 		$this->maybe_save_settings();
 
-		include business_hours()->locate_view( 'settings.php' );
+		include business_hours()->locate_view( 'settings.php', false );
 	}
 
 	private function maybe_save_settings() {
@@ -130,7 +130,7 @@ class BusinessHoursSettings {
 		$open  = ( !empty( $this->cache[$id]['open'] ) ) ? $this->cache[$id]['open'] : '';
 		$close = ( !empty( $this->cache[$id]['close'] ) ) ? $this->cache[$id]['close'] : '';
 
-		include business_hours()->locate_view( 'settings-single-day.php' );
+		include business_hours()->locate_view( 'settings-single-day.php', false );
 
 	}
 
@@ -170,4 +170,7 @@ class BusinessHoursSettings {
 		}
 	}
 
+	private function _show_exceptions() {
+		include business_hours()->locate_view( 'exception.php', false );
+	}
 }
