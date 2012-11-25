@@ -171,6 +171,12 @@ class BusinessHoursSettings {
 	}
 
 	private function _show_exceptions() {
+		$exception_number = 0;
 		include business_hours()->locate_view( 'exception.php', false );
+	}
+
+	private function _show_exceptions_instructions() {
+		$exception_number = 0;
+		include business_hours()->locate_view( 'exception-instructions.php' );
 	}
 }

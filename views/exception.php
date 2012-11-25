@@ -1,4 +1,4 @@
-<div class="exception_date" id="exception_0">
+<div class="exception_date" id="exception_<?php echo $exception_number;?>">
 	<label for="exception_day"><?php _e( 'Day:', 'business-hours' );?>
 		<select name="exception_day" id='exception_day'>
 			<?php $this->_show_exception_days(); ?>
@@ -29,7 +29,7 @@
 		       data-id='1' value="<?php _e( 'Remove', 'business-hours' );?>"/>
 	</label>
 
-	<input type="hidden" name="exception_number" class="exception_number" value="0"/>
+	<input type="hidden" name="exception_number" class="exception_number" value="<?php echo $exception_number;?>"/>
 
 	<div class="bh_clear"></div>
 </div>
