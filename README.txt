@@ -80,6 +80,7 @@ to have the list collapsed by default and a link to open it.
 * New filter: *business-hours-is-open-today*
 * New filter: *business-hours-view-template*
 * New filter: *business-hours-collapsible-link-anchor*
+* New filter: *business-hours-exceptions-how-many-years*
 * Enhancement: Allow users to overide views templates
 * Enhancement: Allow to show the hours table fixed in the widget (without collapsible)
 * Enhancement: Cleanup widget admin. Hide templating fields. Clarify some texts.

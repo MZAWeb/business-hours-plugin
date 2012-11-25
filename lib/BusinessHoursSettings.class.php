@@ -71,12 +71,8 @@ class BusinessHoursSettings {
 	/**** ADMIN PAGE ****/
 
 	public function enqueue_resources() {
-		wp_enqueue_style( 'idealforms', $this->url . 'resources/jquery.idealforms.min.css' );
-		wp_enqueue_script( 'idealforms', $this->url . 'resources/jquery.idealforms.min.js', array( 'jquery' ) );
-
 		wp_enqueue_style( 'business_hours_admin_style', $this->url . 'resources/business-hours-admin.css' );
-		wp_enqueue_script( 'business_hours_admin_script', $this->url . 'resources/business-hours-admin.js', array( 'jquery',
-		                                                                                                           'idealforms' ) );
+		wp_enqueue_script( 'business_hours_admin_script', $this->url . 'resources/business-hours-admin.js', array( 'jquery' ) );
 	}
 
 	public function add_settings_page() {
@@ -108,12 +104,12 @@ class BusinessHoursSettings {
 			$open = $close = '';
 
 			if ( !empty( $_POST['open_' . $id] ) && !empty( $_POST['close_' . $id] ) ) {
-				$open    = sanitize_text_field( ( $_POST['open_' . $id] ) );
-				$close   = sanitize_text_field( ( $_POST['close_' . $id] ) );
+				$open  = sanitize_text_field( ( $_POST['open_' . $id] ) );
+				$close = sanitize_text_field( ( $_POST['close_' . $id] ) );
 			}
 
-			$this->cache[$id]['open']    = $open;
-			$this->cache[$id]['close']   = $close;
+			$this->cache[$id]['open']  = $open;
+			$this->cache[$id]['close'] = $close;
 		}
 
 		$this->save_settings();
@@ -126,7 +122,7 @@ class BusinessHoursSettings {
 	private function _show_days_controls() {
 		$days = business_hours()->get_week_days();
 		foreach ( $days as $id => $day ) {
-			$this->_show_day_controls($id, esc_html( $day ) );
+			$this->_show_day_controls( $id, esc_html( $day ) );
 		}
 	}
 
@@ -140,6 +136,38 @@ class BusinessHoursSettings {
 
 	private function _show_support_form() {
 		include business_hours()->locate_view( 'support.php' );
+	}
+
+	private function _show_exception_days() {
+		echo sprintf( '<option value="%d">%s</option>', 0, __( 'Every day', 'business-hours' ) );
+
+		for ( $i = 1; $i < 32; $i++ ) {
+			echo sprintf( '<option value="%1$d">%1$d</option>', $i );
+		}
+	}
+
+	private function _show_exception_months() {
+		echo sprintf( '<option value="%d">%s</option>', 0, __( 'Every month', 'business-hours' ) );
+
+		global $wp_locale;
+
+		foreach ( $wp_locale->month as $id => $month ) {
+			echo sprintf( '<option value="%d">%s</option>', $id, $month );
+		}
+
+	}
+
+	private function _show_exception_years() {
+
+		echo sprintf( '<option value="%d">%s</option>', 0, __( 'Every year', 'business-hours' ) );
+
+		$this_year = date( 'Y', time() );
+		$limit     = apply_filters( 'business-hours-exceptions-how-many-years', 10 );
+
+		for ( $i = 0; $i < $limit; $i++ ) {
+			echo sprintf( '<option value="%d">%s</option>', $this_year, $this_year );
+			$this_year++;
+		}
 	}
 
 }
