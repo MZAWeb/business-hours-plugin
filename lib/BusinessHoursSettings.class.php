@@ -10,7 +10,7 @@ class BusinessHoursSettings {
 	const SETTING_HOURS      = 'hours';
 	const SETTING_EXCEPTIONS = 'exceptions';
 
-
+	private static $saved = false;
 	private $cache = false;
 	private $page;
 	private $path;
@@ -92,6 +92,8 @@ class BusinessHoursSettings {
 
 		$this->_save_settings();
 
+		self::$saved = true;
+
 	}
 
 	public function maybe_save_settings_hours( $cache ) {
@@ -116,8 +118,28 @@ class BusinessHoursSettings {
 
 	public function maybe_save_settings_exceptions( $cache ) {
 
-		return $cache;
+		$cache[self::SETTING_EXCEPTIONS] = array();
 
+		if ( empty( $_POST['exception_day'] ) )
+			return $cache;
+
+		$days   = $_POST['exception_day'];
+		$months = $_POST['exception_month'];
+		$year   = $_POST['exception_year'];
+		$open   = $_POST['exception_open'];
+		$close  = $_POST['exception_close'];
+
+		/* The first one is the model jQuery uses to clone.
+		 * It's invisible to the user and we dont' care about it
+		 */
+		array_shift( $days );
+
+		/* No exceptions */
+		if ( empty( $days ) )
+			return $cache;
+
+
+		return $cache;
 	}
 
 
@@ -147,6 +169,16 @@ class BusinessHoursSettings {
 		return $this->cache[self::SETTING_HOURS][$day][$key];
 	}
 
+	/*********** HELPERS: ADMIN SCREEN ***************/
+
+	private function _maybe_show_updated_notice() {
+		if ( !self::$saved )
+			return;
+
+		echo '<div id="setting-error-settings_updated" class="updated settings-error">';
+		echo '<p><strong>' . __( 'Settings saved.' ) . '</strong></p></div>';
+	}
+
 	public function show_days_settings() {
 		include business_hours()->locate_view( 'settings-days.php' );
 	}
@@ -162,7 +194,7 @@ class BusinessHoursSettings {
 		$open  = $this->get_open_hour( $id );
 		$close = $this->get_close_hour( $id );
 
-		include business_hours()->locate_view( 'settings-single-day.php', false );
+		include business_hours()->locate_view( 'settings-day-single.php', false );
 
 	}
 
@@ -175,7 +207,9 @@ class BusinessHoursSettings {
 	}
 
 	private function _show_exception_days() {
-		echo sprintf( '<option value="%d">%s</option>', 0, __( 'Every day', 'business-hours' ) );
+		echo sprintf( '<option value="%s">%s</option>', 'every', __( 'Every day', 'business-hours' ) );
+		echo sprintf( '<option value="%s">%s</option>', 'monfri', __( 'Mondays to Fridays', 'business-hours' ) );
+		echo sprintf( '<option value="%s">%s</option>', 'satsun', __( 'Saturdays and Sundays', 'business-hours' ) );
 
 		for ( $i = 1; $i < 32; $i++ ) {
 			echo sprintf( '<option value="%1$d">%1$d</option>', $i );
@@ -183,7 +217,7 @@ class BusinessHoursSettings {
 	}
 
 	private function _show_exception_months() {
-		echo sprintf( '<option value="%d">%s</option>', 0, __( 'Every month', 'business-hours' ) );
+		echo sprintf( '<option value="%s">%s</option>', 'every', __( 'Every month', 'business-hours' ) );
 
 		global $wp_locale;
 
@@ -195,7 +229,7 @@ class BusinessHoursSettings {
 
 	private function _show_exception_years() {
 
-		echo sprintf( '<option value="%d">%s</option>', 0, __( 'Every year', 'business-hours' ) );
+		echo sprintf( '<option value="%s">%s</option>', 'every', __( 'Every year', 'business-hours' ) );
 
 		$this_year = date( 'Y', time() );
 		$limit     = apply_filters( 'business-hours-exceptions-how-many-years', 10 );
@@ -208,7 +242,7 @@ class BusinessHoursSettings {
 
 	private function _show_exceptions() {
 		$exception_number = 0;
-		include business_hours()->locate_view( 'settings-single-exception.php', false );
+		include business_hours()->locate_view( 'settings-exception-single.php', false );
 	}
 
 	private function _show_exceptions_instructions() {
