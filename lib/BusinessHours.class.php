@@ -23,6 +23,9 @@ class BusinessHours {
 
 		$this->_register_settings();
 		$this->_register_shortcodes();
+
+		// see https://github.com/MZAWeb/wp-log-in-browser
+		add_filter( 'wplinb-match-wp-debug', '__return_true' );
 	}
 
 	/**
@@ -231,6 +234,12 @@ class BusinessHours {
 			$file = $this->path . 'views/' . $template;
 		}
 		return apply_filters( 'business-hours-view-template', $file, $template );
+	}
+
+	public function log( $var ) {
+		// see https://github.com/MZAWeb/wp-log-in-browser
+		if ( function_exists( 'browser' ) && constant( "Browser::AUTHOR" ) && Browser::AUTHOR === 'MZAWeb' )
+			browser()->log( $var );
 	}
 
 
