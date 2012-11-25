@@ -10,10 +10,9 @@ jQuery( document ).ready( function ( $ ) {
 		$item.attr( 'id', 'exception_' + $new_id );
 
 		$item.find( '.exception_remove' ).attr( 'data-id', $new_id );
+		$item.find( '.exception_number' ).val( $new_id );
 
 		$item.hide().appendTo( '#exceptions_wrapper' ).slideDown( '150' );
-
-		toggle_remove_buttons();
 	} );
 
 	$( '#exceptions_wrapper' ).on( 'click', '.exception_remove', function ( e ) {
@@ -24,7 +23,6 @@ jQuery( document ).ready( function ( $ ) {
 
 		$( '#exception_' + $id ).slideUp( '150', function () {
 			$( '#exception_' + $id ).remove();
-			toggle_remove_buttons();
 		} );
 
 		$( '.exception_remove_label' ).removeAttr( 'disabled' );
@@ -40,8 +38,6 @@ jQuery( document ).ready( function ( $ ) {
 			$( '.exception_remove_label' ).hide();
 		}
 	}
-
-	toggle_remove_buttons();
 
 } );
 

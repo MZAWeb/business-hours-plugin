@@ -122,6 +122,10 @@
 	clear   : both;
 }
 
+#exception_0 {
+	display : none;
+}
+
 @media screen and (max-width:690px) {
 	.bh_main_container {
 		float : none;
