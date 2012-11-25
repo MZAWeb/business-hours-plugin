@@ -220,11 +220,12 @@ class BusinessHours {
 	 * If the user didn't create an overide, it'll load the default file from this plugin's views template.
 	 *
 	 * @param $template
+	 * @param $overridable
 	 *
 	 * @return string
 	 */
-	public function locate_view( $template ) {
-		if ( $theme_file = locate_template( array( 'business-hours/' . $template ) ) ) {
+	public function locate_view( $template, $overridable = true ) {
+		if ( $overridable && $theme_file = locate_template( array( 'business-hours/' . $template ) ) ) {
 			$file = $theme_file;
 		} else {
 			$file = $this->path . 'views/' . $template;
