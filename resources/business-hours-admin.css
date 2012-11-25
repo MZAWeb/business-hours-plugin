@@ -7,6 +7,11 @@
 	padding : 3px !important;
 }
 
+.business_hours_exception_hour_field {
+	width   : 50px !important;
+	padding : 5px !important;
+}
+
 #business_hours_days_table thead td {
 	font-weight : bold;
 }
@@ -19,11 +24,10 @@
 	font-size     : 12px;
 }
 
-.bh-form input[type="text"] {
+.bh-form input[type="text"], .bh-form select {
 	font-size          : 15px;
 	font-family        : sans-serif;
 	padding            : 7.5px;
-	width              : 225px;
 	border             : 1px solid #aaa;
 	background         : #fff;
 	outline            : 0;
@@ -32,6 +36,70 @@
 	-moz-box-shadow    : inset 0 1px 2px rgba(0, 0, 0, 0.15), transparent 0 0 0;
 	-webkit-box-shadow : inset 0 1px 2px rgba(0, 0, 0, 0.15), transparent 0 0 0;
 	box-shadow         : inset 0 1px 2px rgba(0, 0, 0, 0.15), transparent 0 0 0;
+}
+
+.bh-button {
+	padding               : 6px !important;
+	-webkit-touch-callout : none;
+	-webkit-user-select   : none;
+	-moz-user-select      : none;
+	-ms-user-select       : none;
+	user-select           : none;
+	background-color      : #fff;
+	background-repeat     : no-repeat;
+	background-image      : -webkit-gradient(linear, left top, left bottom, from(#fff), to(#e5e5e5));
+	background-image      : -webkit-linear-gradient(#fff, #e5e5e5);
+	background-image      : -moz-linear-gradient(#fff, #e5e5e5);
+	background-image      : -o-linear-gradient(top, #fff, #e5e5e5);
+	filter                : progid:DXImageTransform.Microsoft.Gradient(StartColorStr = '#ffffff', EndColorStr = '#e5e5e5', GradientType = 0);
+	-ms-filter            : "progid:DXImageTransform.Microsoft.gradient(startColorStr='#ffffff', EndColorStr='#e5e5e5', GradientType=0))";
+	-moz-box-shadow       : 0 1px 1px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+	-webkit-box-shadow    : 0 1px 1px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+	box-shadow            : 0 1px 1px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+	border                : 1px solid #b2b2b2;
+	border-bottom-color   : #999;
+	border-radius         : 3px;
+	color                 : #4c4c4c;
+	font-size             : 85%;
+	padding               : 0 1.2em;
+	margin-right          : 1em;
+	margin-bottom         : 1em;
+	cursor                : pointer
+}
+
+.bh-button:active {
+	background         : #d5e3ed;
+	filter             : 0;
+	-moz-box-shadow    : inset 0 1px 2px rgba(0, 0, 0, 0.2), inset 0 4px 2px rgba(0, 0, 0, 0.08);
+	-webkit-box-shadow : inset 0 1px 2px rgba(0, 0, 0, 0.2), inset 0 4px 2px rgba(0, 0, 0, 0.08);
+	box-shadow         : inset 0 1px 2px rgba(0, 0, 0, 0.2), inset 0 4px 2px rgba(0, 0, 0, 0.08)
+}
+
+.bh-button:hover, .bh-button:focus {
+	border              : 1px solid #8eb3ce;
+	border-bottom-color : #6a9cbf;
+	background-color    : #fff;
+	background-repeat   : no-repeat;
+	background-image    : -webkit-gradient(linear, left top, left bottom, from(#fff), to(#d5e3ed));
+	background-image    : -webkit-linear-gradient(#fff, #d5e3ed);
+	background-image    : -moz-linear-gradient(#fff, #d5e3ed);
+	background-image    : -o-linear-gradient(top, #fff, #d5e3ed);
+	filter              : progid:DXImageTransform.Microsoft.Gradient(StartColorStr = '#ffffff', EndColorStr = '#d5e3ed', GradientType = 0);
+	-ms-filter          : "progid:DXImageTransform.Microsoft.gradient(startColorStr='#ffffff', EndColorStr='#d5e3ed', GradientType=0))";
+	color               : #2b4d65
+}
+
+#exception_original .exception_remove_label {
+	display : none;
+}
+
+.bh-form label {
+	float        : left;
+	margin-right : 5px;
+}
+
+.bh-form label select, .bh-form label input {
+	display : block;
 }
 
 .bh-form textarea {
@@ -43,10 +111,10 @@
 }
 
 .bh_support_container {
-	width      : 250px;
-	float      : right;
-	margin-top : 15px;
-	padding-right: 30px;
+	width         : 250px;
+	float         : right;
+	margin-top    : 15px;
+	padding-right : 30px;
 }
 
 .bh_clear {
@@ -60,7 +128,7 @@
 	}
 
 	.bh_support_container {
-		display: none;
+		display : none;
 	}
 
 }
