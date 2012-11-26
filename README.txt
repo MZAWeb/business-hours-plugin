@@ -83,6 +83,8 @@ to have the list collapsed by default and a link to open it.
 * New filter: *business-hours-exceptions-how-many-years*
 * New filter: *business-hours-save-settings*
 * New action: *business-hours-settings-page*
+* New action: *business-hours-before-row*
+* New action: *business-hours-after-row*
 * Enhancement: Allow users to overide views templates
 * Enhancement: Allow to show the hours table fixed in the widget (without collapsible)
 * Enhancement: Cleanup widget admin. Hide templating fields. Clarify some texts.

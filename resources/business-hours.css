@@ -17,3 +17,7 @@
 .business_hours_table_close {
 	text-align : center;
 }
+
+.business_hours_table_day_exception td {
+	border-top : 0;
+}

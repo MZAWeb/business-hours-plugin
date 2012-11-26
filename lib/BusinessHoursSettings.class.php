@@ -30,16 +30,29 @@ class BusinessHoursSettings {
 	}
 
 
+	/**
+	 * @param $day
+	 *
+	 * @return mixed|void
+	 */
 	public function get_open_hour( $day ) {
 		$open = apply_filters( "business-hours-open-hour", $this->_get_business_hours( $day, "open" ), $day );
 		return $open;
 	}
 
+	/**
+	 * @param $day
+	 *
+	 * @return mixed|void
+	 */
 	public function get_close_hour( $day ) {
 		$close = apply_filters( "business-hours-close-hour", $this->_get_business_hours( $day, "close" ), $day );
 		return $close;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function get_full_settings() {
 		if ( empty( $this->cache ) )
 			$this->_load_settings();
@@ -47,6 +60,11 @@ class BusinessHoursSettings {
 		return $this->cache;
 	}
 
+	/**
+	 * @param $day
+	 *
+	 * @return mixed|void
+	 */
 	public function is_open( $day ) {
 		$open    = $this->get_open_hour( $day );
 		$close   = $this->get_close_hour( $day );
@@ -54,23 +72,35 @@ class BusinessHoursSettings {
 		return apply_filters( 'business-hours-is-open-today', $is_open, $day );
 	}
 
+	/**
+	 * @return mixed|void
+	 */
 	public function get_default_closed_text() {
 		return apply_filters( "business-hours-closed-text", __( "Closed", "business-hours" ) );
 	}
 
 	/**** ADMIN PAGE ****/
 
+	/**
+	 *
+	 */
 	public function enqueue_resources() {
 		wp_enqueue_style( 'business_hours_admin_style', $this->url . 'resources/business-hours-admin.css' );
 		wp_enqueue_script( 'business_hours_admin_script', $this->url . 'resources/business-hours-admin.js', array( 'jquery' ) );
 	}
 
+	/**
+	 *
+	 */
 	public function add_settings_page() {
 		$this->page = add_options_page( __( 'Business Hours', 'business-hours' ), __( 'Business Hours', 'business-hours' ), 'manage_options', BusinessHours::SLUG, array( $this,
 		                                                                                                                                                                  'do_settings_page' ) );
 		add_action( 'admin_print_scripts-' . $this->page, array( $this, 'enqueue_resources' ) );
 	}
 
+	/**
+	 *
+	 */
 	public function do_settings_page() {
 
 		$this->_maybe_save_settings();
@@ -82,6 +112,9 @@ class BusinessHoursSettings {
 
 	}
 
+	/**
+	 *
+	 */
 	private function _maybe_save_settings() {
 
 		if ( empty( $_POST['action'] ) || $_POST['action'] != 'update' )
@@ -100,6 +133,11 @@ class BusinessHoursSettings {
 
 	}
 
+	/**
+	 * @param $cache
+	 *
+	 * @return mixed
+	 */
 	public function maybe_save_settings_hours( $cache ) {
 
 		$days = business_hours()->get_week_days();
@@ -120,18 +158,28 @@ class BusinessHoursSettings {
 
 	}
 
-
-
 	/***** HELPERS *****/
 
+	/**
+	 *
+	 */
 	private function _load_settings() {
 		$this->cache = get_option( BusinessHoursSettings::SETTINGS );
 	}
 
+	/**
+	 *
+	 */
 	private function _save_settings() {
 		update_option( BusinessHoursSettings::SETTINGS, $this->cache );
 	}
 
+	/**
+	 * @param null $day
+	 * @param null $key
+	 *
+	 * @return bool|null
+	 */
 	private function _get_business_hours( $day = null, $key = null ) {
 		if ( empty( $this->cache ) )
 			$this->_load_settings();
@@ -150,6 +198,9 @@ class BusinessHoursSettings {
 
 	/*********** HELPERS: ADMIN SCREEN ***************/
 
+	/**
+	 *
+	 */
 	private function _maybe_show_updated_notice() {
 		if ( !self::$saved )
 			return;
@@ -158,10 +209,16 @@ class BusinessHoursSettings {
 		echo '<p><strong>' . __( 'Settings saved.' ) . '</strong></p></div>';
 	}
 
+	/**
+	 *
+	 */
 	public function show_days_settings() {
 		include business_hours()->locate_view( 'settings-days.php' );
 	}
 
+	/**
+	 *
+	 */
 	private function _show_days_controls() {
 		$days = business_hours()->get_week_days();
 		foreach ( $days as $id => $day ) {
@@ -169,6 +226,10 @@ class BusinessHoursSettings {
 		}
 	}
 
+	/**
+	 * @param $id
+	 * @param $name
+	 */
 	private function _show_day_controls( $id, $name ) {
 		$open  = $this->get_open_hour( $id );
 		$close = $this->get_close_hour( $id );
@@ -177,6 +238,9 @@ class BusinessHoursSettings {
 
 	}
 
+	/**
+	 *
+	 */
 	private function _show_support_form() {
 		include business_hours()->locate_view( 'settings-support.php' );
 	}
