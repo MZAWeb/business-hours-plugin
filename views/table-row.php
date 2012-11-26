@@ -1,4 +1,4 @@
-<tr>
+<tr class='<?php echo $class;?>'>
 	<td class='business_hours_table_day'><?php echo ucwords( $day_name );?></td>
 	<?php if ( $is_open_today ) { ?>
 		<td class='business_hours_table_open'><?php echo ucwords( $open );?></td>

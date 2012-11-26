@@ -104,10 +104,14 @@ class BusinessHours {
 
 		$timestamp = $this->get_timestamp_using_timezone();
 
-		$arr = array( strtolower( gmdate( 'w', $timestamp ) )  => ucwords( date_i18n( 'l', $timestamp ) ) );
+		$arr = array( strtolower( gmdate( 'w', $timestamp ) ) => ucwords( date_i18n( 'l', $timestamp ) ) );
+
 		return $arr;
 	}
 
+	/**
+	 * @return int
+	 */
 	public function get_timestamp_using_timezone() {
 		if ( get_option( 'timezone_string' ) ) {
 			$zone      = new DateTimeZone( get_option( 'timezone_string' ) );
@@ -194,8 +198,13 @@ class BusinessHours {
 		$close         = esc_html( business_hours()->settings()->get_close_hour( $id ) );
 		$is_open_today = business_hours()->settings()->is_open( $id );
 		$closed_text   = business_hours()->settings()->get_default_closed_text();
+		$class = '';
+
+		do_action( 'business-hours-before-row', $id, $day_name, $open, $close, $is_open_today );
 
 		include business_hours()->locate_view( 'table-row.php' );
+
+		do_action( 'business-hours-after-row', $id, $day_name, $open, $close, $is_open_today );
 
 	}
 
@@ -207,11 +216,17 @@ class BusinessHours {
 		add_shortcode( 'businesshoursweek', array( $this, 'shortcode_table' ) );
 	}
 
+	/**
+	 *
+	 */
 	private function _register_widgets() {
 		include 'BusinessHoursWidget.class.php';
 		add_action( 'widgets_init', array( $this, 'register_widgets' ) );
 	}
 
+	/**
+	 *
+	 */
 	public function register_widgets() {
 		register_widget( 'BusinessHoursWidget' );
 	}
@@ -260,6 +275,9 @@ class BusinessHours {
 		return apply_filters( 'business-hours-view-template', $file, $template );
 	}
 
+	/**
+	 * @param $var
+	 */
 	public function log( $var ) {
 		// see https://github.com/MZAWeb/wp-log-in-browser
 		if ( function_exists( 'browser' ) && constant( "Browser::AUTHOR" ) && Browser::AUTHOR === 'MZAWeb' )

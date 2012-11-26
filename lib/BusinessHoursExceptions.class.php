@@ -4,6 +4,7 @@ class BusinessHoursExceptions {
 	const SETTINGS_EXCEPTIONS = 'exceptions';
 
 	private static $_instance;
+	private static $_today_cache = null;
 	/**
 	 * @var BusinessHoursSet
 	 */
@@ -15,15 +16,50 @@ class BusinessHoursExceptions {
 		add_action( 'business-hours-settings-page', array( $this, 'show_exceptions_settings' ), 2 );
 		add_filter( 'business-hours-save-settings', array( $this, 'maybe_save_settings_exceptions' ), 2 );
 
-
+		add_action( 'business-hours-after-row', array( $this, 'maybe_show_exception' ), 1, 5 );
 	}
 
+	/**
+	 * @param $date
+	 *
+	 * @return mixed
+	 */
 	public function get_exceptions_for_date( $date ) {
 
 		if ( !$this->_exceptions )
 			$this->_build_exceptions_rules();
 
 		return $this->_exceptions->includes( $date );
+	}
+
+	public function maybe_show_exception( $id, $day_name, $open, $close, $is_open_today ) {
+		if ( !self::$_today_cache )
+			self::$_today_cache = key( business_hours()->get_day_using_timezone() );
+
+
+		if ( self::$_today_cache === $id ) {
+
+			$date      = date( 'Y-m-d', business_hours()->get_timestamp_using_timezone() );
+			$exception = $this->get_exceptions_for_date( $date );
+
+			if ( empty( $exception ) )
+				return;
+
+			$day_name      = 'Exception for ' . $date;
+			$open          = $exception['open'];
+			$close         = $exception['close'];
+			$is_open_today = !empty( $open ) && !empty( $close );
+
+			$closed_text = business_hours()->settings()->get_default_closed_text();
+
+			$class = 'business_hours_table_day_exception';
+
+			include business_hours()->locate_view( 'table-row.php' );
+
+
+		}
+
+
 	}
 
 	/************ HELPERS ***********/
@@ -33,7 +69,7 @@ class BusinessHoursExceptions {
 	 *
 	 * @return BusinessHoursSet
 	 */
-	private function _build_exceptions_rules($exceptions = null) {
+	private function _build_exceptions_rules( $exceptions = null ) {
 
 		if ( !$exceptions )
 			$exceptions = $this->_get_exceptions();
@@ -52,7 +88,7 @@ class BusinessHoursExceptions {
 			$intersection->addElement( $month );
 			$intersection->addElement( $year );
 
-			$union->addElement( $intersection );
+			$union->addElement( $intersection, array( 'open' => $exception['open'], 'close' => $exception['close'] ) );
 
 		}
 
@@ -60,6 +96,9 @@ class BusinessHoursExceptions {
 
 	}
 
+	/**
+	 * @return mixed
+	 */
 	private function _get_exceptions() {
 		$settings = business_hours()->settings()->get_full_settings();
 		return $settings[self::SETTINGS_EXCEPTIONS];
@@ -67,10 +106,18 @@ class BusinessHoursExceptions {
 
 	/************ SETTINGS ***********/
 
+	/**
+	 *
+	 */
 	public function show_exceptions_settings() {
 		include business_hours()->locate_view( 'settings-exceptions.php' );
 	}
 
+	/**
+	 * @param $cache
+	 *
+	 * @return array
+	 */
 	public function maybe_save_settings_exceptions( $cache ) {
 
 		$cache[self::SETTINGS_EXCEPTIONS] = array();
@@ -111,6 +158,9 @@ class BusinessHoursExceptions {
 
 	/************ SETTINGS HELPERS ***********/
 
+	/**
+	 *
+	 */
 	private function _show_exceptions() {
 		$exceptions = $this->_get_exceptions();
 
@@ -136,11 +186,17 @@ class BusinessHoursExceptions {
 		}
 	}
 
+	/**
+	 *
+	 */
 	private function _show_exceptions_instructions() {
 		$exception_number = 0;
 		include business_hours()->locate_view( 'settings-exception-instructions.php' );
 	}
 
+	/**
+	 * @param $selected
+	 */
 	private function _show_exception_days( $selected ) {
 		echo sprintf( '<option %s value="%s">%s</option>', selected( $selected, 'every', false ), 'every', __( 'Every day', 'business-hours' ) );
 		echo sprintf( '<option %s value="%s">%s</option>', selected( $selected, 'monfri', false ), 'monfri', __( 'Mondays to Fridays', 'business-hours' ) );
@@ -151,6 +207,9 @@ class BusinessHoursExceptions {
 		}
 	}
 
+	/**
+	 * @param $selected
+	 */
 	private function _show_exception_months( $selected ) {
 		echo sprintf( '<option %s value="%s">%s</option>', selected( $selected, 'every', false ), 'every', __( 'Every month', 'business-hours' ) );
 
@@ -162,6 +221,9 @@ class BusinessHoursExceptions {
 
 	}
 
+	/**
+	 * @param $selected
+	 */
 	private function _show_exception_years( $selected ) {
 
 		echo sprintf( '<option %s value="%s">%s</option>', selected( $selected, 'every', false ), 'every', __( 'Every year', 'business-hours' ) );

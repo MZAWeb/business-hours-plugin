@@ -4,14 +4,28 @@
 /****************************** Temporal Expressions ******************************/
 
 
+/**
+ *
+ */
 class BusinessHoursTEDay implements iBusinessHoursTemporalExpression {
 
+	/**
+	 * @var
+	 */
 	private $_day;
 
+	/**
+	 * @param $day
+	 */
 	public function __construct( $day ) {
 		$this->_day = $day;
 	}
 
+	/**
+	 * @param $date
+	 *
+	 * @return bool
+	 */
 	public function includes( $date ) {
 
 		if ( $this->_day === 'every' )
@@ -30,6 +44,11 @@ class BusinessHoursTEDay implements iBusinessHoursTemporalExpression {
 
 	}
 
+	/**
+	 * @param $date
+	 *
+	 * @return bool
+	 */
 	private function is_weekend( $date ) {
 		$weekDay = date( 'w', strtotime( $date ) );
 		return ( $weekDay == 0 || $weekDay == 6 );
@@ -38,14 +57,28 @@ class BusinessHoursTEDay implements iBusinessHoursTemporalExpression {
 }
 
 
+/**
+ *
+ */
 class BusinessHoursTEMonth implements iBusinessHoursTemporalExpression {
 
+	/**
+	 * @var
+	 */
 	private $_month;
 
+	/**
+	 * @param $month
+	 */
 	public function __construct( $month ) {
 		$this->_month = $month;
 	}
 
+	/**
+	 * @param $date
+	 *
+	 * @return bool
+	 */
 	public function includes( $date ) {
 
 		if ( $this->_month === 'every' )
@@ -60,14 +93,28 @@ class BusinessHoursTEMonth implements iBusinessHoursTemporalExpression {
 }
 
 
+/**
+ *
+ */
 class BusinessHoursTEYear implements iBusinessHoursTemporalExpression {
 
+	/**
+	 * @var
+	 */
 	private $_year;
 
+	/**
+	 * @param $year
+	 */
 	public function __construct( $year ) {
 		$this->_year = $year;
 	}
 
+	/**
+	 * @param $date
+	 *
+	 * @return bool
+	 */
 	public function includes( $date ) {
 
 		if ( $this->_year === 'every' )
@@ -85,8 +132,18 @@ class BusinessHoursTEYear implements iBusinessHoursTemporalExpression {
 /****************************** SETS ******************************/
 
 
+/**
+ *
+ */
 class BusinessHoursSetIntersection extends BusinessHoursSet {
 
+	/**
+	 * @param $method
+	 * @param $arguments
+	 *
+	 * @return bool
+	 * @throws Exception
+	 */
 	public function __call( $method, $arguments ) {
 
 		if ( !method_exists( $this->_setInterface, $method ) ) {
@@ -100,14 +157,24 @@ class BusinessHoursSetIntersection extends BusinessHoursSet {
 			if ( !call_user_func_array( array( $element, $method ), $arguments ) )
 				return false;
 
-		return true;
+		return $this->_storage;
 	}
 
 }
 
 
+/**
+ *
+ */
 class BusinessHoursSetUnion extends BusinessHoursSet {
 
+	/**
+	 * @param $method
+	 * @param $arguments
+	 *
+	 * @return bool
+	 * @throws Exception
+	 */
 	public function __call( $method, $arguments ) {
 
 		if ( !method_exists( $this->_setInterface, $method ) ) {
@@ -116,10 +183,10 @@ class BusinessHoursSetUnion extends BusinessHoursSet {
 
 		if ( empty( $this->_elements ) )
 			return false;
-
+		
 		foreach ( $this->_elements as $element )
 			if ( call_user_func_array( array( $element, $method ), $arguments ) )
-				return true;
+				return $this->_storage;
 
 		return false;
 	}
@@ -130,10 +197,14 @@ class BusinessHoursSetUnion extends BusinessHoursSet {
 /****************************** HELPERS ******************************/
 
 
+/**
+ *
+ */
 abstract class BusinessHoursSet {
 
 	protected $_setInterface = null;
 	protected $_elements = array();
+	protected $_storage = true;
 
 	public function __construct( $setInterface ) {
 		if ( !is_string( $setInterface ) ) {
@@ -145,25 +216,39 @@ abstract class BusinessHoursSet {
 		$this->_setInterface = $setInterface;
 	}
 
-	public function addElement( $element ) {
+	/**
+	 * @param $element
+	 *
+	 * @param $storage
+	 *
+	 * @throws Exception
+	 */
+	public function addElement( $element, $storage = array() ) {
 		if ( $element instanceof $this->_setInterface || $element instanceof BusinessHoursSet ) {
 			$this->_elements[] = $element;
+
+			if ( !empty( $storage ) )
+				$this->_storage = $storage;
+
 		} else {
 			throw new Exception( "Element must implement $this->_setInterface or Set" );
 		}
 	}
 
-	public function addElements( array $elements ) {
-		foreach ( $elements as $element ) {
-			$this->addElement( $element );
-		}
-	}
-
-
 }
 
 
+/**
+ *
+ */
 interface iBusinessHoursTemporalExpression {
 
+	/**
+	 * @abstract
+	 *
+	 * @param $date
+	 *
+	 * @return mixed
+	 */
 	public function includes( $date );
 }
