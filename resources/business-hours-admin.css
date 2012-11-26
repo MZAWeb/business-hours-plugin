@@ -24,6 +24,10 @@
 	font-size     : 12px;
 }
 
+.bh-form .form-table {
+	min-width : 700px;
+}
+
 .bh-form input[type="text"], .bh-form select {
 	font-size          : 15px;
 	font-family        : sans-serif;
@@ -106,15 +110,23 @@
 	resize : none
 }
 
-.bh_main_container {
-	float : left;
+.bh_support_container {
+	position      : absolute;
+	right         : 16px;
+	top           : 140px;
+	width         : 250px;
+	border        : 1px solid #aaa;
+	border-radius : 3px;
 }
 
-.bh_support_container {
-	width         : 250px;
-	float         : right;
-	margin-top    : 15px;
-	padding-right : 30px;
+.bh_support {
+	background : #F0F0F0;
+	padding    : 10px;
+}
+
+.bh_support h3 {
+	width      : 100%;
+	text-align : center;
 }
 
 .bh_clear {
@@ -127,12 +139,15 @@
 }
 
 @media screen and (max-width:690px) {
-	.bh_main_container {
-		float : none;
-	}
 
 	.bh_support_container {
-		display : none;
+		position : relative;
+		width    : 100%;
+		margin   : 0;
+		display  : block;
+		clear    : both;
+		top      : auto;
+		right    : auto;
 	}
 
 }
