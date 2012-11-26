@@ -23,6 +23,7 @@
 						                         value="<?php _e( 'Save Changes' );?>"></p>
 
 						<div class="bh_clear"></div>
+
 					</td>
 				</tr>
 			</table>
@@ -34,6 +35,5 @@
 	</div>
 
 	<div class="bh_clear"></div>
-
 
 </div>
