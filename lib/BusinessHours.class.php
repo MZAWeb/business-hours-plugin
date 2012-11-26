@@ -23,9 +23,7 @@ class BusinessHours {
 
 		$this->_register_settings();
 		$this->_register_shortcodes();
-
-		if ( class_exists( 'BusinessHoursExceptions' ) )
-			BusinessHoursExceptions::instance();
+		$this->_register_widgets();
 
 		// see https://github.com/MZAWeb/wp-log-in-browser
 		add_filter( 'wplinb-match-wp-debug', '__return_true' );
@@ -104,6 +102,13 @@ class BusinessHours {
 	 */
 	public function get_day_using_timezone() {
 
+		$timestamp = $this->get_timestamp_using_timezone();
+
+		$arr = array( strtolower( gmdate( 'w', $timestamp ) )  => ucwords( date_i18n( 'l', $timestamp ) ) );
+		return $arr;
+	}
+
+	public function get_timestamp_using_timezone() {
 		if ( get_option( 'timezone_string' ) ) {
 			$zone      = new DateTimeZone( get_option( 'timezone_string' ) );
 			$datetime  = new DateTime( 'now', $zone );
@@ -113,9 +118,7 @@ class BusinessHours {
 			$offset    = $offset * 60 * 60;
 			$timestamp = time() + $offset;
 		}
-
-		$arr = array( strtolower( gmdate( 'w', $timestamp ) )  => ucwords( date_i18n( 'l', $timestamp ) ) );
-		return $arr;
+		return $timestamp;
 	}
 
 	/**
@@ -136,7 +139,7 @@ class BusinessHours {
 		$first  = array_slice( $days, 0, $start_of_week, true );
 		$second = array_slice( $days, $start_of_week, count( $days ), true );
 
-		$days =  $second + $first;
+		$days = $second + $first;
 
 		return $days;
 	}
@@ -204,6 +207,15 @@ class BusinessHours {
 		add_shortcode( 'businesshoursweek', array( $this, 'shortcode_table' ) );
 	}
 
+	private function _register_widgets() {
+		include 'BusinessHoursWidget.class.php';
+		add_action( 'widgets_init', array( $this, 'register_widgets' ) );
+	}
+
+	public function register_widgets() {
+		register_widget( 'BusinessHoursWidget' );
+	}
+
 	/**
 	 * @return BusinessHoursSettings
 	 */
@@ -216,7 +228,16 @@ class BusinessHours {
 	 *
 	 */
 	private function _register_settings() {
+		if ( !class_exists( 'BusinessHoursSettings' ) )
+			include 'BusinessHoursSettings.class.php';
+
 		$this->settings = new BusinessHoursSettings();
+
+		if ( !class_exists( 'BusinessHoursExceptions' ) )
+			include 'BusinessHoursExceptions.class.php';
+
+		BusinessHoursExceptions::instance();
+
 	}
 
 	/**
