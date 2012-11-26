@@ -1,10 +1,5 @@
 <?php
 
-add_action( 'widgets_init', 'BusinessHoursWidget_load' );
-function BusinessHoursWidget_load() {
-	register_widget( 'BusinessHoursWidget' );
-}
-
 
 class BusinessHoursWidget extends WP_Widget {
 

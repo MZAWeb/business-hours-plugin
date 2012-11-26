@@ -13,9 +13,6 @@ For bug reports, ideas or comments: https://github.com/MZAWeb/business-hours-plu
 */
 
 require 'lib/BusinessHours.class.php';
-require 'lib/BusinessHoursSettings.class.php';
-require 'lib/BusinessHoursWidget.class.php';
-require 'lib/BusinessHoursExceptions.class.php';
 
 function business_hours_init() {
 	load_plugin_textdomain( 'business-hours', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );

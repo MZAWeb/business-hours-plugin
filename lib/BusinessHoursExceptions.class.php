@@ -4,14 +4,59 @@ class BusinessHoursExceptions {
 	const SETTINGS_EXCEPTIONS = 'exceptions';
 
 	private static $_instance;
+	/**
+	 * @var BusinessHoursSet
+	 */
+	private $_exceptions = null;
 
 	public function __construct() {
-		//$this->_exceptions = business_hours()->settings()->get_exceptions();
-
-		require 'BusinessHoursTemporalExpressionsEngine.class.php';
+		require_once 'BusinessHoursTemporalExpressionsEngine.class.php';
 
 		add_action( 'business-hours-settings-page', array( $this, 'show_exceptions_settings' ), 2 );
 		add_filter( 'business-hours-save-settings', array( $this, 'maybe_save_settings_exceptions' ), 2 );
+
+
+	}
+
+	public function get_exceptions_for_date( $date ) {
+
+		if ( !$this->_exceptions )
+			$this->_build_exceptions_rules();
+
+		return $this->_exceptions->includes( $date );
+	}
+
+	/************ HELPERS ***********/
+
+	/**
+	 * @param null $exceptions
+	 *
+	 * @return BusinessHoursSet
+	 */
+	private function _build_exceptions_rules($exceptions = null) {
+
+		if ( !$exceptions )
+			$exceptions = $this->_get_exceptions();
+
+		$union = new BusinessHoursSetUnion( 'iBusinessHoursTemporalExpression' );
+
+		foreach ( $exceptions as $exception ) {
+
+			$day   = new BusinessHoursTEDay( $exception['day'] );
+			$month = new BusinessHoursTEMonth( $exception['month'] );
+			$year  = new BusinessHoursTEYear( $exception['year'] );
+
+			$intersection = new BusinessHoursSetIntersection( 'iBusinessHoursTemporalExpression' );
+
+			$intersection->addElement( $day );
+			$intersection->addElement( $month );
+			$intersection->addElement( $year );
+
+			$union->addElement( $intersection );
+
+		}
+
+		$this->_exceptions = $union;
 
 	}
 
@@ -57,6 +102,9 @@ class BusinessHoursExceptions {
 			                                             'close' => $close[$index] );
 
 		}
+
+
+		$this->_build_exceptions_rules( $cache[self::SETTINGS_EXCEPTIONS] );
 
 		return $cache;
 	}

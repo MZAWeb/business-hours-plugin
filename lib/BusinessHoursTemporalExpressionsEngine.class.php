@@ -14,13 +14,25 @@ class BusinessHoursTEDay implements iBusinessHoursTemporalExpression {
 
 	public function includes( $date ) {
 
-		if ( $this->_day === 0 )
+		if ( $this->_day === 'every' )
 			return true;
 
-		$day = date( 'j', strtotime( $date ) );
+		if ( $this->_day === 'monfri' && !$this->is_weekend( $date ) )
+			return true;
 
-		return $this->_day === intval( $day );
+		if ( $this->_day === 'satsun' && $this->is_weekend( $date ) )
+			return true;
 
+		if ( intval( $this->_day ) === intval( date( 'j', strtotime( $date ) ) ) )
+			return true;
+
+		return false;
+
+	}
+
+	private function is_weekend( $date ) {
+		$weekDay = date( 'w', strtotime( $date ) );
+		return ( $weekDay == 0 || $weekDay == 6 );
 	}
 
 }
@@ -36,11 +48,13 @@ class BusinessHoursTEMonth implements iBusinessHoursTemporalExpression {
 
 	public function includes( $date ) {
 
-		if ( $this->_month === 0 )
+		if ( $this->_month === 'every' )
 			return true;
 
-		$month = date( 'n', strtotime( $date ) );
-		return $this->_month === intval( $month );
+		if ( intval( $this->_month ) === intval( date( 'n', strtotime( $date ) ) ) )
+			return true;
+
+		return false;
 	}
 
 }
@@ -56,11 +70,13 @@ class BusinessHoursTEYear implements iBusinessHoursTemporalExpression {
 
 	public function includes( $date ) {
 
-		if ( $this->_year === 0 )
+		if ( $this->_year === 'every' )
 			return true;
 
-		$year = date( 'Y', strtotime( $date ) );
-		return $this->_year === intval( $year );
+		if ( intval( $this->_year ) === intval( date( 'Y', strtotime( $date ) ) ) )
+			return true;
+
+		return false;
 	}
 
 }
