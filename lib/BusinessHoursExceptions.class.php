@@ -4,7 +4,10 @@ class BusinessHoursExceptions {
 	const SETTINGS_EXCEPTIONS = 'exceptions';
 
 	private static $_instance;
-	private static $_today_cache = null;
+	private static $_today_id = null;
+	private static $_today_exception = null;
+	private static $_today_date = null;
+
 	/**
 	 * @var BusinessHoursSet
 	 */
@@ -16,6 +19,7 @@ class BusinessHoursExceptions {
 		add_action( 'business-hours-settings-page', array( $this, 'show_exceptions_settings' ), 2 );
 		add_filter( 'business-hours-save-settings', array( $this, 'maybe_save_settings_exceptions' ), 2 );
 
+		add_action( 'business-hours-before-row', array( $this, 'maybe_setup_exception' ), 1, 5 );
 		add_action( 'business-hours-after-row', array( $this, 'maybe_show_exception' ), 1, 5 );
 	}
 
@@ -32,33 +36,44 @@ class BusinessHoursExceptions {
 		return $this->_exceptions->includes( $date );
 	}
 
-	public function maybe_show_exception( $id, $day_name, $open, $close, $is_open_today ) {
-		if ( !self::$_today_cache )
-			self::$_today_cache = key( business_hours()->get_day_using_timezone() );
+	public function maybe_setup_exception( $id, $day_name, $open, $close, $is_open_today ) {
 
+		if ( !self::$_today_id )
+			self::$_today_id = key( business_hours()->get_day_using_timezone() );
 
-		if ( self::$_today_cache === $id ) {
+		if ( self::$_today_id === $id ) {
 
-			$date      = date( 'Y-m-d', business_hours()->get_timestamp_using_timezone() );
+			$date      = date_i18n( get_option('date_format'), business_hours()->get_timestamp_using_timezone() );
 			$exception = $this->get_exceptions_for_date( $date );
 
 			if ( empty( $exception ) )
 				return;
 
-			$day_name      = 'Exception for ' . $date;
-			$open          = $exception['open'];
-			$close         = $exception['close'];
-			$is_open_today = !empty( $open ) && !empty( $close );
-
-			$closed_text = business_hours()->settings()->get_default_closed_text();
-
-			$class = 'business_hours_table_day_exception';
-
-			include business_hours()->locate_view( 'table-row.php' );
-
-
+			self::$_today_exception = $exception;
+			self::$_today_date      = $date;
 		}
 
+	}
+
+	public function maybe_show_exception( $id, $day_name, $open, $close, $is_open_today ) {
+
+		if ( !self::$_today_exception )
+			return;
+
+		$day_name      = self::$_today_date;
+		$open          = self::$_today_exception['open'];
+		$close         = self::$_today_exception['close'];
+		$is_open_today = !empty( $open ) && !empty( $close );
+
+		$closed_text = business_hours()->settings()->get_default_closed_text();
+
+		$class = 'business_hours_table_day_exception';
+
+		include business_hours()->locate_view( 'table-row.php' );
+
+		self::$_today_exception = null;
+		self::$_today_date      = null;
+		self::$_today_id        = null;
 
 	}
 
