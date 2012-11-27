@@ -19,4 +19,4 @@ function business_hours_init() {
 	business_hours();
 }
 
-add_action( 'init', 'business_hours_init' );
+add_action( 'plugins_loaded', 'business_hours_init' );
