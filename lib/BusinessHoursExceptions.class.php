@@ -20,7 +20,7 @@ class BusinessHoursExceptions {
 		add_filter( 'business-hours-save-settings', array( $this, 'maybe_save_settings_exceptions' ), 2 );
 
 		add_action( 'business-hours-before-row', array( $this, 'maybe_setup_exception' ), 1, 5 );
-		add_action( 'business-hours-after-row', array( $this, 'maybe_show_exception' ), 1, 5 );
+		add_action( 'business-hours-after-row',  array( $this, 'maybe_show_exception' ),  1, 5 );
 	}
 
 	/**

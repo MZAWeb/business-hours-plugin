@@ -63,10 +63,11 @@ to have the list collapsed by default and a link to open it.
 
 == Screenshots ==
 
-1. Working Hours
-2. Widget settings
-3. Front-End: Closed
-4. Front-End: Working
+1. Business Hours Settings
+2. Exceptions Settings
+3. Widget Settings
+4. Front-End: Closed
+5. Front-End: Working
 
 == Upgrade Notice ==
 
