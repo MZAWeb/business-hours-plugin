@@ -39,6 +39,22 @@ class BusinessHoursExceptions {
 
 	/**
 	 * @param $id
+	 *
+	 * @return mixed
+	 */
+	public function get_exceptions_for_day_id( $id ) {
+		$dates = $this->_pre_compute_this_week_actual_dates();
+		$day   = date_i18n( get_option( 'date_format' ), $dates[$id] );
+		return $this->get_exceptions_for_date( $day );
+	}
+
+	public function get_localized_date_for_day_id( $id ) {
+		$dates = $this->_pre_compute_this_week_actual_dates();
+		return date_i18n( get_option( 'date_format' ), $dates[$id] );
+	}
+
+	/**
+	 * @param $id
 	 * @param $day_name
 	 * @param $open
 	 * @param $close
