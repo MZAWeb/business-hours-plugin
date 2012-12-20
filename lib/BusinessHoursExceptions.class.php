@@ -4,9 +4,10 @@ class BusinessHoursExceptions {
 	const SETTINGS_EXCEPTIONS = 'exceptions';
 
 	private static $_instance;
-	private static $_today_id = null;
+	private static $_today_id        = null;
 	private static $_today_exception = null;
-	private static $_today_date = null;
+	private static $_today_date      = null;
+	private static $_actual_dates    = array();
 
 	/**
 	 * @var BusinessHoursSet
@@ -16,11 +17,11 @@ class BusinessHoursExceptions {
 	public function __construct() {
 		require_once 'BusinessHoursTemporalExpressionsEngine.class.php';
 
-		add_action( 'business-hours-settings-page', array( $this, 'show_exceptions_settings' ), 2 );
-		add_filter( 'business-hours-save-settings', array( $this, 'maybe_save_settings_exceptions' ), 2 );
-
-		add_action( 'business-hours-before-row', array( $this, 'maybe_setup_exception' ), 1, 5 );
-		add_action( 'business-hours-after-row',  array( $this, 'maybe_show_exception' ),  1, 5 );
+		add_action( 'business-hours-settings-page', array( $this, 'show_exceptions_settings'       ), 2    );
+		add_filter( 'business-hours-save-settings', array( $this, 'maybe_save_settings_exceptions' ), 2    );
+		add_filter( 'business-hours-row-class',     array( $this, 'maybe_add_exception_class'      ), 2, 3 );
+		add_action( 'business-hours-before-row',    array( $this, 'maybe_setup_exception'          ), 1, 5 );
+		add_action( 'business-hours-after-row',     array( $this, 'maybe_show_exception'           ), 1, 5 );
 	}
 
 	/**
@@ -36,35 +37,35 @@ class BusinessHoursExceptions {
 		return $this->_exceptions->includes( $date );
 	}
 
+	/**
+	 * @param $id
+	 * @param $day_name
+	 * @param $open
+	 * @param $close
+	 * @param $is_open_today
+	 */
 	public function maybe_setup_exception( $id, $day_name, $open, $close, $is_open_today ) {
-
-		if ( !self::$_today_id )
-			self::$_today_id = key( business_hours()->get_day_using_timezone() );
-
-		if ( self::$_today_id === $id ) {
-
-			$date      = date_i18n( get_option('date_format'), business_hours()->get_timestamp_using_timezone() );
-			$exception = $this->get_exceptions_for_date( $date );
-
-			if ( empty( $exception ) )
-				return;
-
-			self::$_today_exception = $exception;
-			self::$_today_date      = $date;
-		}
-
+		$dates                  = $this->_pre_compute_this_week_actual_dates();
+		self::$_today_date      = date_i18n( get_option( 'date_format' ), $dates[$id] );
+		self::$_today_exception = $this->get_exceptions_for_date( self::$_today_date );
 	}
 
+	/**
+	 * @param $id
+	 * @param $day_name
+	 * @param $open
+	 * @param $close
+	 * @param $is_open_today
+	 */
 	public function maybe_show_exception( $id, $day_name, $open, $close, $is_open_today ) {
 
 		if ( !self::$_today_exception )
 			return;
 
-		$day_name      = self::$_today_date;
+		$day_name      = sprintf( __( 'Exception for %s', 'business-hours' ), self::$_today_date );
 		$open          = self::$_today_exception['open'];
 		$close         = self::$_today_exception['close'];
 		$is_open_today = !empty( $open ) && !empty( $close );
-
 		$closed_text = business_hours()->settings()->get_default_closed_text();
 
 		$class = 'business_hours_table_day_exception';
@@ -75,6 +76,14 @@ class BusinessHoursExceptions {
 		self::$_today_date      = null;
 		self::$_today_id        = null;
 
+	}
+
+	public function maybe_add_exception_class( $class, $id, $day_name ) {
+
+		if ( !self::$_today_exception )
+			return $class;
+
+		return $class . ' business_hours_has_exception';
 	}
 
 	/************ HELPERS ***********/
@@ -109,6 +118,38 @@ class BusinessHoursExceptions {
 
 		$this->_exceptions = $union;
 
+	}
+
+	/**
+	 * Populates a cache array with the actual dates for this week days. It takes into
+	 * account what days are displayed after and before today to generate the dates, so
+	 * the dates are always consecutive.
+	 *
+	 * Oh boy, it'd be so much easier to assume Sunday=0, Saturday=6 and be done with it
+	 * But I commited to honor custom "Week Starts On" settings, so, we need to do this.
+	 *
+	 * @return string
+	 */
+	private function _pre_compute_this_week_actual_dates() {
+
+		if ( !empty( self::$_actual_dates ) )
+			return self::$_actual_dates;
+
+		$today    = key( business_hours()->get_day_using_timezone() );
+		$days     = business_hours()->get_week_days();
+		$modifier = "Last";
+
+		foreach ( $days as $did => $name ) {
+			if ( $did == $today ) {
+				$modifier   = "Next";
+				$today_date = business_hours()->get_timestamp_using_timezone();
+			} else {
+				$today_date = strtotime( $modifier . ' ' . $name );
+			}
+			self::$_actual_dates[$did] = $today_date;
+		}
+
+		return self::$_actual_dates;
 	}
 
 	/**

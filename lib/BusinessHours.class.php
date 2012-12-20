@@ -18,7 +18,7 @@ class BusinessHours {
 	private $url;
 
 	public function  __construct() {
-		$this->path = trailingslashit( dirname( dirname( __FILE__ ) ) );
+		$this->path = trailingslashit( dirname( dirname( __FILE__ )         ) );
 		$this->url  = trailingslashit( dirname( plugins_url( '', __FILE__ ) ) );
 
 		$this->_register_settings();
@@ -33,7 +33,7 @@ class BusinessHours {
 	 *  Load the required styles and javascript files
 	 */
 	public function enqueue_resources() {
-		wp_enqueue_style( 'business_hours_style', $this->url . 'resources/business-hours.css' );
+		wp_enqueue_style ( 'business_hours_style',  $this->url . 'resources/business-hours.css'                   );
 		wp_enqueue_script( 'business_hours_script', $this->url . 'resources/business-hours.js', array( 'jquery' ) );
 	}
 
@@ -198,9 +198,10 @@ class BusinessHours {
 		$close         = esc_html( business_hours()->settings()->get_close_hour( $id ) );
 		$is_open_today = business_hours()->settings()->is_open( $id );
 		$closed_text   = business_hours()->settings()->get_default_closed_text();
-		$class = '';
 
 		do_action( 'business-hours-before-row', $id, $day_name, $open, $close, $is_open_today );
+
+		$class = apply_filters( 'business-hours-row-class', '', $id, $day_name );
 
 		include business_hours()->locate_view( 'table-row.php' );
 

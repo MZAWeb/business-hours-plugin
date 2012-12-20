@@ -21,3 +21,7 @@
 .business_hours_table_day_exception td {
 	border-top : 0;
 }
+
+.business_hours_has_exception td.business_hours_table_open, .business_hours_has_exception td.business_hours_table_close, .business_hours_has_exception td.business_hours_table_closed {
+	text-decoration : line-through;
+}

@@ -72,6 +72,16 @@ to have the list collapsed by default and a link to open it.
 == Upgrade Notice ==
 
 = 2.0 =
+* Feature: Allow for exceptions (for holidays, etc)
+* Enhancement: Allow users to overide views templates
+* Enhancement: Allow to show the hours table fixed in the widget (without collapsible)
+* Enhancement: Cleanup widget admin. Hide templating fields. Clarify some texts.
+* Enhancement: Cleanup settings admin. Sexier and more intuitive.
+* Enhancement: The plugin will respect the "Week Starts On" value from Settings->General to show the days
+* Enhancement: Works with WordPress 3.5
+* Enhancement: General cleaning and improve architecture.
+* Enhancement: Improve code quality ( a lot! )
+* Enhancement: Improve loading speed
 * Bugfix: Fixed how I'm handling timezones to account for DST
 * Bugfix: Fixed minor bugs for WordPress 3.4.2
 * Bugfix: Added missing getText calls in hardcoded strings
@@ -83,18 +93,10 @@ to have the list collapsed by default and a link to open it.
 * New filter: *business-hours-collapsible-link-anchor*
 * New filter: *business-hours-exceptions-how-many-years*
 * New filter: *business-hours-save-settings*
+* New filter: *business-hours-row-class*
 * New action: *business-hours-settings-page*
 * New action: *business-hours-before-row*
 * New action: *business-hours-after-row*
-* Enhancement: Allow users to overide views templates
-* Enhancement: Allow to show the hours table fixed in the widget (without collapsible)
-* Enhancement: Cleanup widget admin. Hide templating fields. Clarify some texts.
-* Enhancement: Cleanup settings admin. Sexier and more intuitive.
-* Enhancement: The plugin will respect the "Week Starts On" value from Settings->General to show the days
-* Enhancement: Make it work with WordPress 3.5
-* General cleaning and improve architecture.
-* Improve code quality ( a lot! )
-* Improve loading speed
 
 = 1.3.2 =
 * Fixed how the plugin handles weekdays names localization
