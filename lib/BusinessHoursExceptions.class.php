@@ -242,7 +242,7 @@ class BusinessHoursExceptions {
 
 		include business_hours()->locate_view( 'settings-exception-single.php', false );
 
-		foreach ( $exceptions as $exception_number => $exception ) {
+		foreach ( (array) $exceptions as $exception_number => $exception ) {
 
 			// 0 is reserverd for the base rule
 			$exception_number++;
