@@ -37,6 +37,14 @@ class BusinessHoursWidget extends WP_Widget {
 		$close         = esc_html( business_hours()->settings()->get_close_hour( $id ) );
 		$is_open_today = business_hours()->settings()->is_open( $id );
 
+		$exceptions = BusinessHoursExceptions::instance()->get_exceptions_for_day_id( $id );
+		if ( !empty( $exceptions ) ) {
+			$open          = $exceptions['open'];
+			$close         = $exceptions['close'];
+			$is_open_today = !empty( $open ) && !empty( $close );
+			$name          = BusinessHoursExceptions::instance()->get_localized_date_for_day_id( $id );
+		}
+
 		echo $before_widget;
 		echo $before_title . $title . $after_title;
 
