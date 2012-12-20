@@ -186,7 +186,7 @@ class BusinessHoursSetUnion extends BusinessHoursSet {
 		
 		foreach ( $this->_elements as $element )
 			if ( call_user_func_array( array( $element, $method ), $arguments ) )
-				return $this->_storage;
+				return $element->_storage;
 
 		return false;
 	}
@@ -233,6 +233,11 @@ abstract class BusinessHoursSet {
 		} else {
 			throw new Exception( "Element must implement $this->_setInterface or Set" );
 		}
+	}
+
+	public function setStorage( $storage = array() ) {
+		if ( !empty( $storage ) )
+			$this->_storage = $storage;
 	}
 
 }
