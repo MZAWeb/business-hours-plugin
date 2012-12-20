@@ -116,7 +116,7 @@ class BusinessHoursExceptions {
 
 		$union = new BusinessHoursSetUnion( 'iBusinessHoursTemporalExpression' );
 
-		foreach ( $exceptions as $exception ) {
+		foreach ( (array) $exceptions as $exception ) {
 
 			$day   = new BusinessHoursTEDay( $exception['day'] );
 			$month = new BusinessHoursTEMonth( $exception['month'] );
