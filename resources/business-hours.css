@@ -2,6 +2,20 @@
 	display : none;
 }
 
+.workinghourswidget tr.business_hours_has_exception > td {
+	padding-bottom : 0 !important;
+}
+
+.workinghourswidget tr > td {
+	padding-bottom : 10px;
+}
+
+.workinghourswidget tr > th {
+	padding-bottom  : 15px;
+	text-decoration : underline;
+	font-weight     : bold;
+}
+
 .business_hours_table_closed {
 	text-align : center;
 }

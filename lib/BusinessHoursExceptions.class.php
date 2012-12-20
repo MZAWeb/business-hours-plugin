@@ -62,7 +62,7 @@ class BusinessHoursExceptions {
 		if ( !self::$_today_exception )
 			return;
 
-		$day_name      = sprintf( __( 'Exception for %s', 'business-hours' ), self::$_today_date );
+		$day_name      = self::$_today_date;
 		$open          = self::$_today_exception['open'];
 		$close         = self::$_today_exception['close'];
 		$is_open_today = !empty( $open ) && !empty( $close );
