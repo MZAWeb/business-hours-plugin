@@ -127,8 +127,9 @@ class BusinessHoursExceptions {
 			$intersection->addElement( $day );
 			$intersection->addElement( $month );
 			$intersection->addElement( $year );
+			$intersection->setStorage( array( 'open' => $exception['open'], 'close' => $exception['close'] ) );
 
-			$union->addElement( $intersection, array( 'open' => $exception['open'], 'close' => $exception['close'] ) );
+			$union->addElement( $intersection );
 
 		}
 
@@ -219,9 +220,7 @@ class BusinessHoursExceptions {
 			                                             'year'  => $years[$index],
 			                                             'open'  => $open[$index],
 			                                             'close' => $close[$index] );
-
 		}
-
 
 		$this->_build_exceptions_rules( $cache[self::SETTINGS_EXCEPTIONS] );
 
