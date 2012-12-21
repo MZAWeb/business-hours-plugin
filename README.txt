@@ -1,7 +1,7 @@
 === Business Hours Plugin  ===
 Contributors: MZAWeb
-Donate link: http://mzaweb.com
-Tags: working hours, working, business hours, business, hours
+Donate link: http://danieldvork.in
+Tags: working hours, working, business hours, business, hours, stores, branches
 Requires at least: 3.1
 Tested up to: 3.5
 Stable tag: 2.0
