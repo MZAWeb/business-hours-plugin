@@ -7,6 +7,7 @@ Tested up to: 3.5
 Stable tag: 2.0
 
 Business Hours lets you show to your visitors the time you open and close your business each day of the week.
+You can setup open and close hours for each day of the week, and then create exceptions for specific dates (holidays, etc)
 
 == Description ==
 The Business Hours Plugin allows you to post your daily working hours and show it to your visitors:
@@ -14,7 +15,7 @@ The Business Hours Plugin allows you to post your daily working hours and show i
 *	In a configurable and templatable widget.
 *	In a page / post using shortcodes
 
-You'll be able to choose between showing only today's working hours, or a table with the hours for each day of the week.
+You'll be able to choose between showing only today's working hours, or a collapsible table with the hours for each day of the week.
 If you want to show only today's working hours, the plugin will check your timezone settings to calculate which day to show.
 
 Also, Business Hours is 100% translatable to your language.
@@ -23,7 +24,7 @@ We've included language files for:
 *	Spanish
 *	Dutch
 
-If you want to help us translate this plugin to your language, please drop us a line or contact us in the [support forum](http://wordpress.org/tags/business-hours-plugin#postform)
+If you want to help me translate this plugin to your language, please drop me a line or contact me in the [support forum](http://wordpress.org/tags/business-hours-plugin#postform)
 
 
 == Installation ==
@@ -66,10 +67,16 @@ to have the list collapsed by default and a link to open it.
 1. Business Hours Settings
 2. Exceptions Settings
 3. Widget Settings
-4. Front-End: Closed
-5. Front-End: Working
+4. Front-End Widget: Closed
+5. Front-End Widget: Working
+6. Front-End Widget: Full week, with an exception
 
 == Upgrade Notice ==
+
+= 2.0 =
+Introducing Exceptions (Holidays, etc). Also, this version is (almost) a complete rewrite. Faster, more secure and with a lot of improvements.
+
+== Changelog ==
 
 = 2.0 =
 * Feature: Allow for exceptions (for holidays, etc)
