@@ -86,7 +86,7 @@ class BusinessHoursSettings {
 	 *
 	 */
 	public function enqueue_resources() {
-		wp_enqueue_style( 'business_hours_admin_style', $this->url . 'resources/business-hours-admin.css' );
+		wp_enqueue_style(  'business_hours_admin_style',  $this->url . 'resources/business-hours-admin.css'                   );
 		wp_enqueue_script( 'business_hours_admin_script', $this->url . 'resources/business-hours-admin.js', array( 'jquery' ) );
 	}
 
@@ -252,9 +252,19 @@ class BusinessHoursSettings {
 
 	public function maybe_upgrade() {
 
-		if ( get_option( self::PRE_20_SETTINGS ) )
-			$this->upgrade_1x_20();
+		$upgraded = false;
 
+		if ( get_option( self::PRE_20_SETTINGS ) )
+			$upgraded = $this->upgrade_1x_20();
+
+		if ( $upgraded )
+			add_action( 'admin_notices', array( $this, 'upgrade_notice' ) );
+
+	}
+
+	public function upgrade_notice() {
+		$message = sprintf( __( 'Thanks for upgrading <strong>Business Hours</strong> to the %s version. Go to the <a href="%s">settings page</a> to check the new features. If you have any suggestion or issue, <a href="">create a support ticket</a>.', 'business-hours' ), BusinessHours::VERSION, get_admin_url( null, 'options-general.php?page=' . BusinessHours::SLUG ), 'https://github.com/MZAWeb/business-hours-plugin/issues' );
+		echo sprintf( '<div id="message" class="updated"><p>%s</p></div>', $message );
 	}
 
 	public function upgrade_1x_20() {
@@ -274,8 +284,8 @@ class BusinessHoursSettings {
 		$this->_save_settings();
 
 		delete_option(self::PRE_20_SETTINGS);
-	
-	}
 
+		return true;
+	}
 
 }
