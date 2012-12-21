@@ -275,12 +275,6 @@ class BusinessHoursSettings {
 
 		delete_option(self::PRE_20_SETTINGS);
 	
-		
-		echo "<pre>";
-		var_dump($cache);
-		echo "</pre>";
-		
-		
 	}
 
 
