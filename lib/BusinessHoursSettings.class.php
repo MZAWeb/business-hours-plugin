@@ -23,11 +23,12 @@ class BusinessHoursSettings {
 		$this->_load_settings();
 
 		add_action( 'admin_menu', array( $this, 'add_settings_page' ) );
+		add_action( 'init',       array( $this, 'maybe_upgrade'     ) );
 
 		add_action( 'business-hours-settings-page', array( $this, 'show_days_settings' ), 1 );
 		add_filter( 'business-hours-save-settings', array( $this, 'maybe_save_settings_hours' ), 1 );
-
 	}
+
 
 
 	/**
@@ -98,18 +99,14 @@ class BusinessHoursSettings {
 		add_action( 'admin_print_scripts-' . $this->page, array( $this, 'enqueue_resources' ) );
 	}
 
+
 	/**
 	 *
 	 */
 	public function do_settings_page() {
-
 		$this->_maybe_save_settings();
-
 		business_hours()->log( $this->cache );
-
 		include business_hours()->locate_view( 'settings.php', false );
-
-
 	}
 
 	/**
@@ -171,6 +168,12 @@ class BusinessHoursSettings {
 	 *
 	 */
 	private function _save_settings() {
+
+		if ( !isset( $this->cache[self::SETTING_HOURS] ) )
+			$this->cache[self::SETTING_HOURS] = array();
+		if ( !isset( $this->cache[self::SETTING_EXCEPTIONS] ) )
+			$this->cache[self::SETTING_EXCEPTIONS] = array();
+
 		update_option( BusinessHoursSettings::SETTINGS, $this->cache );
 	}
 
@@ -244,5 +247,41 @@ class BusinessHoursSettings {
 	private function _show_support_form() {
 		include business_hours()->locate_view( 'settings-support.php' );
 	}
+
+	/***************** Upgrades *****************/
+
+	public function maybe_upgrade() {
+
+		if ( get_option( self::PRE_20_SETTINGS ) )
+			$this->upgrade_1x_20();
+
+	}
+
+	public function upgrade_1x_20() {
+
+		$old_settings = get_option( self::PRE_20_SETTINGS );
+		$cache        = array();
+
+		foreach ( business_hours()->get_week_days() as $id => $name ) {
+			$name = strtolower( $name );
+			if ( isset( $old_settings[$name] ) ) {
+				$cache[self::SETTING_HOURS][$id]['open']  = isset( $old_settings[$name]['open'] ) ? $old_settings[$name]['open'] : "";
+				$cache[self::SETTING_HOURS][$id]['close'] = isset( $old_settings[$name]['close'] ) ? $old_settings[$name]['close'] : "";
+			}
+		}
+
+		$this->cache = $cache;
+		$this->_save_settings();
+
+		delete_option(self::PRE_20_SETTINGS);
+	
+		
+		echo "<pre>";
+		var_dump($cache);
+		echo "</pre>";
+		
+		
+	}
+
 
 }
