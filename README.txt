@@ -4,7 +4,7 @@ Donate link: http://danieldvork.in
 Tags: working hours, working, business hours, business, hours, stores, branches
 Requires at least: 3.1
 Tested up to: 3.5
-Stable tag: 2.0
+Stable tag: 2.0.1
 
 Business Hours lets you show to your visitors the time you open and close your business each day of the week.
 You can setup open and close hours for each day of the week, and then create exceptions for specific dates (holidays, etc)
@@ -73,13 +73,19 @@ to have the list collapsed by default and a link to open it.
 
 == Upgrade Notice ==
 
+= 2.0.1 =
+Bug fixes and small improvements.
+
 = 2.0 =
 Introducing Exceptions (Holidays, etc). Also, this version is (almost) a complete rewrite. Faster, more secure and with a lot of improvements.
 
 == Changelog ==
 
+= 2.0.1 =
+* Bugfix: Widget admin is faling to toggle advanced options on first load
+
 = 2.0 =
-* Feature: Allow for exceptions (for holidays, etc)
+* Enhancement: Allow for exceptions (for holidays, etc)
 * Enhancement: Allow users to overide views templates
 * Enhancement: Allow to show the hours table fixed in the widget (without collapsible)
 * Enhancement: Cleanup widget admin. Hide templating fields. Clarify some texts.
@@ -89,9 +95,9 @@ Introducing Exceptions (Holidays, etc). Also, this version is (almost) a complet
 * Enhancement: General cleaning and improve architecture.
 * Enhancement: Improve code quality ( a lot! )
 * Enhancement: Improve loading speed
-* Bugfix: Fixed how I'm handling timezones to account for DST
-* Bugfix: Fixed minor bugs for WordPress 3.4.2
-* Bugfix: Added missing getText calls in hardcoded strings
+* Bugfix:	   Fixed how I'm handling timezones to account for DST
+* Bugfix: 	   Fixed minor bugs for WordPress 3.4.2
+* Bugfix: 	   Added missing getText calls in hardcoded strings
 * New filter: *business-hours-closed-text*
 * New filter: *business-hours-open-hour*
 * New filter: *business-hours-close-hour*

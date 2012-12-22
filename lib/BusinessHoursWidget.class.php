@@ -12,15 +12,17 @@ class BusinessHoursWidget extends WP_Widget {
 
 		$this->WP_Widget( 'workinghourswidget', __( 'Business Hours by Day', "business-hours" ), $widget_ops, $control_ops );
 
-		if ( is_active_widget( false, false, $this->id_base ) ) {
-			add_action( 'wp_enqueue_scripts', array( &$this, 'scripts' ) );
-			add_action( 'admin_enqueue_scripts', array( &$this, 'scripts' ) );
-		}
+		add_action( 'wp_enqueue_scripts', array( &$this, 'scripts' ) );
+		add_action( 'admin_enqueue_scripts', array( &$this, 'scripts' ) );
 
 	}
 
 	function scripts() {
-		business_hours()->enqueue_resources();
+
+		global $pagenow;
+		if ( is_active_widget( false, false, $this->id_base ) || 'widgets.php' == $pagenow )
+			business_hours()->enqueue_resources();
+
 	}
 
 	function widget( $args, $instance ) {
