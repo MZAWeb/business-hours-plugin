@@ -25,8 +25,8 @@ class BusinessHoursSettings {
 		add_action( 'admin_menu', array( $this, 'add_settings_page' ) );
 		add_action( 'init',       array( $this, 'maybe_upgrade'     ) );
 
-		add_action( 'business-hours-settings-page', array( $this, 'show_days_settings' ), 1 );
-		add_filter( 'business-hours-save-settings', array( $this, 'maybe_save_settings_hours' ), 1 );
+		add_action( 'business-hours-settings-page', array( $this, 'show_days_settings'        ), 1 );
+		add_filter( 'business-hours-save-settings', array( $this, 'maybe_save_settings_hours' ), 1, 1 );
 	}
 
 
@@ -168,12 +168,6 @@ class BusinessHoursSettings {
 	 *
 	 */
 	private function _save_settings() {
-
-		if ( !isset( $this->cache[self::SETTING_HOURS] ) )
-			$this->cache[self::SETTING_HOURS] = array();
-		if ( !isset( $this->cache[self::SETTING_EXCEPTIONS] ) )
-			$this->cache[self::SETTING_EXCEPTIONS] = array();
-
 		update_option( BusinessHoursSettings::SETTINGS, $this->cache );
 	}
 
@@ -279,6 +273,8 @@ class BusinessHoursSettings {
 				$cache[self::SETTING_HOURS][$id]['close'] = isset( $old_settings[$name]['close'] ) ? $old_settings[$name]['close'] : "";
 			}
 		}
+
+		$cache[self::SETTING_EXCEPTIONS] = array();
 
 		$this->cache = $cache;
 		$this->_save_settings();
