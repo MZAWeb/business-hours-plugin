@@ -1,0 +1,278 @@
+# Copyright (C) 2012 
+# This file is distributed under the same license as the  package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Business Hours\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-12-21 16:41-0300\n"
+"PO-Revision-Date: 2013-04-07 23:35+0100\n"
+"Last-Translator: MZAWeb <wordpress@mzaweb.com>\n"
+"Language-Team: MZAWeb <wordpress@mzaweb.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-SearchPath-0: /Users/daniel/Sites/wpdib/wp-content/plugins/business-"
+"hours-plugin\n"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/lib/BusinessHoursExceptions.class.php:272
+msgid "Every day"
+msgstr "Każdego dnia"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/lib/BusinessHoursExceptions.class.php:273
+msgid "Mondays to Fridays"
+msgstr "Od poniedziałku do piątku"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/lib/BusinessHoursExceptions.class.php:274
+msgid "Saturdays and Sundays"
+msgstr "Soboty i Niedziele"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/lib/BusinessHoursExceptions.class.php:285
+msgid "Every month"
+msgstr "Każdego miesiąca"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/lib/BusinessHoursExceptions.class.php:300
+msgid "Every year"
+msgstr "Każdego roku"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/lib/BusinessHoursSettings.class.php:80
+msgid "Closed"
+msgstr "Zamknięte:"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/lib/BusinessHoursSettings.class.php:97
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/settings.php:3
+msgid "Business Hours"
+msgstr "Godziny otwarcia"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/lib/BusinessHoursSettings.class.php:212
+msgid "Settings saved."
+msgstr "Ustawienia zapisane"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/lib/BusinessHoursSettings.class.php:266
+#, php-format
+msgid ""
+"Thanks for upgrading <strong>Business Hours</strong> to the %s version. Go "
+"to the <a href=\"%s\">settings page</a> to check the new features. If you "
+"have any suggestion or issue, <a href=\"\">create a support ticket</a>."
+msgstr ""
+"Dziękujemy za aktualizację<strong>Business Hours</strong> do wersji %s.  Idź "
+"do <a href=\"%s\">strony ustawień</a>aby zobaczyć nowe funkcje. Jeżeli masz "
+"nowe pomysły lub zgłoszenia, <a href=\"\">utwórz zgłoszenie</a>."
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/lib/BusinessHoursWidget.class.php:9
+msgid "Shows your business hours by day"
+msgstr "Pokazuj godziny otwarcia dzień po dniu"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/lib/BusinessHoursWidget.class.php:13
+msgid "Business Hours by Day"
+msgstr "Godziny otwarcia wg dnia"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/lib/BusinessHoursWidget.class.php:96
+msgid "Business hours on"
+msgstr "Godizny otwarcia na"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/settings-days.php:5
+msgid "Business hours for each day of the week"
+msgstr "Godziny otwarcia dla każdego dnia tygodnia"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/settings-days.php:7
+msgid "Leave the fields empty for the days your business is closed."
+msgstr "Pozostaw to pole puste w dniach, w których jest nieczynne."
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/settings-days.php:13
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/table.php:10
+msgid "Day"
+msgstr "Dzień"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/settings-days.php:14
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/table.php:11
+msgid "Open"
+msgstr "Otwieramy"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/settings-days.php:15
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/table.php:12
+msgid "Close"
+msgstr "Zamykamy"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/settings-exception-instructions.php:1
+msgid "<b>Instructions:</b>"
+msgstr "<b>Instrukcje:</b>"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/settings-exception-instructions.php:3
+msgid "1) Click on \"Add Exception\"."
+msgstr "1) Kliknij na \"Dodaj wyjątek\"."
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/settings-exception-instructions.php:5
+msgid ""
+"2) Select a day, month and / or year (i.e. To add an exception for every "
+"March 1st select day 1, month March and leave the year empty)."
+msgstr ""
+"2) Zaznacz dzień, miesiąc i/lub rok (np. żeby dodać wyjątek dla każdego 1 "
+"marca wybierz dzień1, miesiąc, Marzec i pozostaw rok pusty)"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/settings-exception-instructions.php:7
+msgid ""
+"3) Type the open and close hours for this exception. Leave empty if your "
+"business remains closed during this exception."
+msgstr ""
+"3) Wprowadź godziny otwarcia i zamknięcia dla tego wyjątku. Zostaw puste "
+"jeżeli Twój biznes pozostaje w tym czasie zamknięty."
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/settings-exception-instructions.php:9
+msgid ""
+"4) If you want to add more exceptions, click the 'Add Exceptions' button and "
+"repeat this process in the new added row."
+msgstr ""
+"4) Jeżeli chcesz dodać więcej wyjątków to kliknij przycisk 'Dodaj wyjątek; i "
+"powtórz proces w nowododanej linii."
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/settings-exception-instructions.php:11
+msgid ""
+"5) Need help setting exceptions? <a href='https://github.com/MZAWeb/business-"
+"hours-plugin/issues'>Open a ticket in GitHub</a>"
+msgstr ""
+"5) Potrzebujesz pomocy w ustawianiu wyjątków? <a href='https://github.com/"
+"MZAWeb/business-hours-plugin/issues'>Otwórz zgłoszenie na GitHub</a>"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/settings-exception-single.php:2
+msgid "Day:"
+msgstr "Dzień:"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/settings-exception-single.php:7
+msgid "Month:"
+msgstr "Miesiąc:"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/settings-exception-single.php:12
+msgid "Year:"
+msgstr "Rok:"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/settings-exception-single.php:17
+msgid "Open:"
+msgstr "Otwieramy:"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/settings-exception-single.php:22
+msgid "Close:"
+msgstr "Zamykamy:"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/settings-exception-single.php:29
+msgid "Remove"
+msgstr "Usuń"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/settings-exceptions.php:5
+msgid "Exceptions"
+msgstr "Wyjątki"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/settings-exceptions.php:8
+msgid ""
+"Exceptions allow you to set different business hours for specific days (ie: "
+"Holidays, Vacations, etc)."
+msgstr ""
+"Wyjątki pozwalają na zdefiniowania różnych godzin otwarcia dla wybranych dni "
+"(np. Wakacje, Święta, itp.)"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/settings-exceptions.php:19
+msgid "Add exception"
+msgstr "Dodaj wyjątek"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/settings-support.php:3
+msgid "Support / Contact"
+msgstr "Wsparcie / Kontakt"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/settings-support.php:6
+msgid ""
+"Need support? Have an idea? Create a <a href=\"https://github.com/MZAWeb/"
+"business-hours-plugin/issues\">new issue in GitHub</a> or in the <a href="
+"\"http://wordpress.org/support/plugin/business-hours-plugin\">support "
+"forums</a> at WordPress.org"
+msgstr ""
+"Potrzebujesz wsparcia? Masz pomysł? Utwórz <a href=\"https://github.com/"
+"MZAWeb/business-hours-plugin/issues\">nowe zgłoszenie naGitHub</a> albo na "
+"<a href=\"http://wordpress.org/support/plugin/business-hours-plugin\">forum "
+"wsparcia</a> WordPress.org"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/settings-support.php:8
+msgid ""
+"<a href=\"https://github.com/MZAWeb/business-hours-plugin/wiki"
+"\">Documentation</a>"
+msgstr ""
+"<a href=\"https://github.com/MZAWeb/business-hours-plugin/wiki"
+"\">Dokumentacja</a>"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/settings-support.php:9
+msgid "<a href=\"http://twitter.com/MZAWeb\">Tweet to me</a>"
+msgstr "<a href=\"http://twitter.com/MZAWeb\">Tweetuj do mnie</a>"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/settings-support.php:10
+msgid ""
+"<a href=\"http://danieldvork.in/?"
+"utm_source=business_hours&utm_medium=settings&utm_campaign=plugin\">My blog</"
+"a>"
+msgstr ""
+"<a href=\"http://danieldvork.in/?"
+"utm_source=business_hours&utm_medium=settings&utm_campaign=plugin\">Mój "
+"blog</a>"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/settings-support.php:11
+msgid ""
+"<a href=\"http://mzaweb.com/?"
+"utm_source=business_hours&utm_medium=settings&utm_campaign=plugin\">MZAWeb - "
+"WordPress Development</a>"
+msgstr ""
+"<a href=\"http://mzaweb.com/?"
+"utm_source=business_hours&utm_medium=settings&utm_campaign=plugin\">MZAWeb - "
+"WordPress Development</a>"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/settings-support.php:13
+msgid ""
+"I promise to keep this plugin free for ever. If it makes you happy and you "
+"want to make me happy, you can donate a few bucks to me via PayPal at "
+"daniel@mzaweb.com"
+msgstr ""
+"Obiecuję, że ta wtyczka na zawsze będzie bezpłatna. Jeżeli to Cię "
+"uszczęśliwa, a Ty chcesz uszczęśliwić mnie, to możesz \"postawić mi piwo\" "
+"przez PayPal na daniel@mzaweb.com"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/settings.php:23
+msgid "Save Changes"
+msgstr "Zapisz zmiany"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/widget-admin.php:2
+#, php-format
+msgid "Go to the <a href=\"%s\">settings</a> to setup your business hours."
+msgstr "Idź do <a href=\"%s\">ustawień</a> żeby ustawić godziny otwarcia."
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/widget-admin.php:5
+msgid "Widget title"
+msgstr "Tytuł widgeta"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/widget-admin.php:17
+msgid "Show a table with the business hours for all weekdays"
+msgstr "Pokaż tabelę z godzinami otwarcia dla wszystkich dni tygodnia."
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/widget-admin.php:24
+#, fuzzy
+msgid "Make the list collapsible"
+msgstr "Ustaw listę 'collapsible'"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/widget-admin.php:29
+msgid "Toggle templating options"
+msgstr "Rozwiń opcje szablonów"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/widget-admin.php:34
+msgid "Template for heading"
+msgstr "Szablon dla nagłówka"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/widget-admin.php:43
+msgid "Template for working hours"
+msgstr "Szablon dla godzin otwarcia"
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/widget-admin.php:48
+msgid ""
+"The tags {{Open}} and {{Close}} will be replaced with the correct values."
+msgstr "Tagi {{Open}} i {{Close}} będą zastąpione odpowiednimi wartościami."
+
+#: /Users/daniel/Sites/wpdib/wp-content/plugins/business-hours-plugin/views/widget-admin.php:52
+msgid "Template for \"closed\" text"
+msgstr "Szablon dla tekstu \"zamknięte\""
