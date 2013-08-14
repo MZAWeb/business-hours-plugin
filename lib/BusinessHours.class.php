@@ -113,15 +113,17 @@ class BusinessHours {
 	 * @return int
 	 */
 	public function get_timestamp_using_timezone() {
-		if ( get_option( 'timezone_string' ) ) {
+		$timezone_string = get_option( 'timezone_string' );
+		if ( ! empty( $timezone_string ) ) {
 			$zone      = new DateTimeZone( get_option( 'timezone_string' ) );
 			$datetime  = new DateTime( 'now', $zone );
 			$timestamp = time() + $datetime->getOffset();
 		} else {
 			$offset    = get_option( 'gmt_offset' );
-			$offset    = $offset * 60 * 60;
+			$offset    = $offset * HOUR_IN_SECONDS;
 			$timestamp = time() + $offset;
 		}
+
 		return $timestamp;
 	}
 
