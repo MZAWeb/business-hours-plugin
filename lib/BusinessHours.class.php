@@ -5,25 +5,38 @@ class BusinessHours {
 	const SLUG    = 'business-hours';
 
 	/**
+	 * Singleton instance of this class
 	 * @var BusinessHours
 	 */
 	private static $instance;
+
 	/**
+	 * Instance to the settings class
 	 * @var BusinessHoursSettings
 	 */
-	private $settings;
+	private $settings = null;
 
-
+	/**
+	 * Path of this plugin's folder
+	 * @var string
+	 */
 	private $path;
+
+	/**
+	 * URL of this plugin's folder
+	 * @var string
+	 */
 	private $url;
 
 	public function  __construct() {
 		$this->path = trailingslashit( dirname( dirname( __FILE__ )         ) );
 		$this->url  = trailingslashit( dirname( plugins_url( '', __FILE__ ) ) );
 
-		$this->_register_settings();
+		$this->settings();
+		$this->_register_exceptions();
 		$this->_register_shortcodes();
-		$this->_register_widgets();
+
+		add_action( 'widgets_init', array( $this, 'register_widgets' ) );
 
 		// see https://github.com/MZAWeb/wp-log-in-browser
 		add_filter( 'wplinb-match-wp-debug', '__return_true' );
@@ -38,20 +51,46 @@ class BusinessHours {
 	}
 
 	/**
-	 *
+	 *  Registers the widget
+	 */
+	public function register_widgets() {
+		if ( ! class_exists( 'BusinessHoursWidget' ) )
+			include 'BusinessHoursWidget.class.php';
+		register_widget( 'BusinessHoursWidget' );
+	}
+
+	/**
+	 * Getter for the settings class with lazy load
+	 * @return BusinessHoursSettings
+	 */
+	public function settings() {
+
+		if ( empty( $this->settings ) ) {
+
+			if ( ! class_exists( 'BusinessHoursSettings' ) )
+				include 'BusinessHoursSettings.class.php';
+
+			$this->settings = new BusinessHoursSettings();
+		}
+
+		return $this->settings;
+	}
+
+	/**
 	 * Today's hours shortcode handler.
-	 * See https://github.com/MZAWeb/business-hours-plugin/wiki/Shortcodes
 	 *
-	 * @param      $atts
-	 * @param null $content
+	 * @param array $atts
+	 * @param null  $content
 	 *
-	 * @return mixed|null
+	 * @url https://github.com/MZAWeb/business-hours-plugin/wiki/Shortcodes
+	 *
+	 * @return string
 	 */
 	public function shortcode( $atts, $content = null ) {
 
 		$closed_text = business_hours()->settings()->get_default_closed_text();
 
-		extract( shortcode_atts( array( 'closed' => $closed_text ), $atts ) );
+		$atts = shortcode_atts( array( 'closed' => $closed_text ), $atts );
 
 		if ( empty( $content ) )
 			return $content;
@@ -64,10 +103,10 @@ class BusinessHours {
 		$is_open_today = business_hours()->settings()->is_open( $id );
 
 		if ( $is_open_today ) {
-			$content = str_replace( "{{TodayOpen}}", $open, $content );
+			$content = str_replace( "{{TodayOpen}}",  $open,  $content );
 			$content = str_replace( "{{TodayClose}}", $close, $content );
 		} else {
-			$content = $closed;
+			$content = $atts['closed'];
 		}
 
 		return $content;
@@ -76,16 +115,18 @@ class BusinessHours {
 	/**
 	 *
 	 * Everyday hours shortcode handler.
-	 * See https://github.com/MZAWeb/business-hours-plugin/wiki/Shortcodes
 	 *
 	 * @param      $atts
 	 *
-	 * @return mixed|null
+	 * @url https://github.com/MZAWeb/business-hours-plugin/wiki/Shortcodes
+	 *
+	 * @return string
 	 */
 	public function shortcode_table( $atts ) {
 
-		extract( shortcode_atts( array( 'collapsible' => 'false', ), $atts ) );
-		$collapsible = ( strtolower( $collapsible ) === "true" ) ? true : false;
+		$atts = shortcode_atts( array( 'collapsible' => 'false', ), $atts );
+
+		$collapsible = ( strtolower( $atts['collapsible'] ) === "true" ) ? true : false;
 
 		if ( $collapsible )
 			$this->enqueue_resources();
@@ -98,7 +139,7 @@ class BusinessHours {
 	 * Get the today's day name depending on the WP setting.
 	 * To adjust your timezone go to Settings->General
 	 *
-	 * @return array
+	 * @return array [day_number int]day_name string
 	 */
 	public function get_day_using_timezone() {
 
@@ -110,12 +151,15 @@ class BusinessHours {
 	}
 
 	/**
+	 * Get the current timestamp in the timezone set up in Settings->General
 	 * @return int
 	 */
 	public function get_timestamp_using_timezone() {
+
 		$timezone_string = get_option( 'timezone_string' );
+
 		if ( ! empty( $timezone_string ) ) {
-			$zone      = new DateTimeZone( get_option( 'timezone_string' ) );
+			$zone      = new DateTimeZone( $timezone_string );
 			$datetime  = new DateTime( 'now', $zone );
 			$timestamp = time() + $datetime->getOffset();
 		} else {
@@ -128,8 +172,9 @@ class BusinessHours {
 	}
 
 	/**
-	 *
 	 * Get the internationalized days names
+	 * in the correct order for the start_of_week
+	 * the user configured in Settings->General
 	 *
 	 * @return array
 	 */
@@ -160,11 +205,14 @@ class BusinessHours {
 	 *
 	 */
 	public function show_table( $collapsible_link = true ) {
-		$days = $this->get_week_days();
 
-		$collapsible_link_anchor = apply_filters( 'business-hours-collapsible-link-anchor', '[Show working hours]' );
+		$days     = $this->get_week_days();
+		$template = business_hours()->locate_view( 'table.php' );
 
-		include business_hours()->locate_view( 'table.php' );
+		$collapsible_link_anchor = apply_filters( 'business-hours-collapsible-link-anchor', __( '[Show working hours]', 'business-hours' ) );
+
+		if ( ! empty( $template ) )
+			include $template;
 	}
 
 	/**
@@ -196,7 +244,7 @@ class BusinessHours {
 	private function _table_row( $id, $day_name ) {
 		$ret = "";
 
-		$open          = esc_html( business_hours()->settings()->get_open_hour( $id ) );
+		$open          = esc_html( business_hours()->settings()->get_open_hour( $id  ) );
 		$close         = esc_html( business_hours()->settings()->get_close_hour( $id ) );
 		$is_open_today = business_hours()->settings()->is_open( $id );
 		$closed_text   = business_hours()->settings()->get_default_closed_text();
@@ -205,57 +253,30 @@ class BusinessHours {
 
 		$class = apply_filters( 'business-hours-row-class', '', $id, $day_name );
 
-		include business_hours()->locate_view( 'table-row.php' );
+		$template = business_hours()->locate_view( 'table-row.php' );
+
+		if ( ! empty( $template ) )
+			include $template;
 
 		do_action( 'business-hours-after-row', $id, $day_name, $open, $close, $is_open_today );
 
 	}
 
 	/**
-	 *
+	 * Registers the shortcodes
 	 */
 	private function _register_shortcodes() {
-		add_shortcode( 'businesshours', array( $this, 'shortcode' ) );
+		add_shortcode( 'businesshours',     array( $this, 'shortcode'       ) );
 		add_shortcode( 'businesshoursweek', array( $this, 'shortcode_table' ) );
 	}
 
 	/**
-	 *
+	 *  Starts the exceptions engine
 	 */
-	private function _register_widgets() {
-		include 'BusinessHoursWidget.class.php';
-		add_action( 'widgets_init', array( $this, 'register_widgets' ) );
-	}
-
-	/**
-	 *
-	 */
-	public function register_widgets() {
-		register_widget( 'BusinessHoursWidget' );
-	}
-
-	/**
-	 * @return BusinessHoursSettings
-	 */
-	public function settings() {
-		return $this->settings;
-	}
-
-	/**
-	 *  Register the settings to create the settings screen
-	 *
-	 */
-	private function _register_settings() {
-		if ( !class_exists( 'BusinessHoursSettings' ) )
-			include 'BusinessHoursSettings.class.php';
-
-		$this->settings = new BusinessHoursSettings();
-
-		if ( !class_exists( 'BusinessHoursExceptions' ) )
+	private function _register_exceptions() {
+		if ( ! class_exists( 'BusinessHoursExceptions' ) )
 			include 'BusinessHoursExceptions.class.php';
-
 		BusinessHoursExceptions::instance();
-
 	}
 
 	/**
