@@ -134,5 +134,11 @@ class WP_Test_BusinessHours extends WP_UnitTestCase {
 		$this->assertEquals( $dir . 'widget-admin.php',                   	$this->plugin_instance->locate_view( 'widget-admin.php',                   	true ), 'widget-admin.php'                   	);
 	}
 
+	function test_shortcodes_exist(){
+		global $shortcode_tags;
+
+		$this->assertArrayHasKey( 'businesshours',      $shortcode_tags, 'businesshours' );
+		$this->assertArrayHasKey( 'businesshoursweek',  $shortcode_tags, 'businesshoursweek' );
+	}
 
 }
