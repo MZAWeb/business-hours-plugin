@@ -1,5 +1,5 @@
 === Business Hours Plugin  ===
-Contributors: MZAWeb, Casper Klenz-Kitenge
+Contributors: MZAWeb
 Donate link: http://danieldvork.in
 Tags: working hours, working, business hours, business, hours, stores, branches
 Requires at least: 3.1
@@ -23,7 +23,7 @@ We've included language files for:
 
 *	Spanish
 *	Dutch
-* Danish
+* Danish (by Casper Klenz-Kitenge / @cabgfx)
 
 If you want to help me translate this plugin to your language, please drop me a line or contact me in the [support forum](http://wordpress.org/tags/business-hours-plugin#postform)
 
