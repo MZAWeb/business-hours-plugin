@@ -73,6 +73,10 @@ to have the list collapsed by default and a link to open it.
 
 == Upgrade Notice ==
 
+= 2.1 =
+* Enhancement: Add test suite
+* Enhancement: Improve code quality
+
 = 2.0.1 =
 Bug fixes and small improvements.
 
