@@ -1,7 +1,7 @@
 <?php
 class BusinessHours {
 
-	const VERSION = '2.0';
+	const VERSION = '2.1';
 	const SLUG    = 'business-hours';
 
 	/**
