@@ -22,6 +22,7 @@ class WP_Test_BusinessHours extends WP_UnitTestCase {
 		activate_plugin( $this->plugin );
 
 		$this->plugin_instance = BusinessHours::instance();
+
 	}
 
 	function test_get_timestamp_using_timezone_works_for_gmt_offset() {
@@ -84,32 +85,53 @@ class WP_Test_BusinessHours extends WP_UnitTestCase {
 
 		update_option( 'start_of_week', 1 );
 
-		$days = array(
-			1 => 'Monday',
-			2 => 'Tuesday',
-			3 => 'Wednesday',
-			4 => 'Thursday',
-			5 => 'Friday',
-			6 => 'Saturday',
-			0 => 'Sunday',
-		);
-
-		$this->assertEquals( $this->plugin_instance->get_week_days(), $days, "Starts on Monday" );
+		$this->assertEquals(
+			$this->plugin_instance->get_week_days(),
+			array(
+				1 => 'Monday',
+				2 => 'Tuesday',
+				3 => 'Wednesday',
+				4 => 'Thursday',
+				5 => 'Friday',
+				6 => 'Saturday',
+				0 => 'Sunday',
+			), "Starts on Monday" );
 
 		update_option( 'start_of_week', 4 );
 
-		$days = array(
-			4 => 'Thursday',
-			5 => 'Friday',
-			6 => 'Saturday',
-			0 => 'Sunday',
-			1 => 'Monday',
-			2 => 'Tuesday',
-			3 => 'Wednesday',
-		);
+		$this->assertEquals(
+			$this->plugin_instance->get_week_days(),
+			array(
+				4 => 'Thursday',
+				5 => 'Friday',
+				6 => 'Saturday',
+				0 => 'Sunday',
+				1 => 'Monday',
+				2 => 'Tuesday',
+				3 => 'Wednesday',
+			), "Starts on Thursday" );
 
-		$this->assertEquals( $this->plugin_instance->get_week_days(), $days, "Starts on Thursday" );
+	}
 
+	function test_settings_getter() {
+		$settings = $this->plugin_instance->settings();
+		$this->assertTrue( is_a( $settings, 'BusinessHoursSettings' ) );
+	}
+
+	function test_views_can_be_found_by_locate_views() {
+
+		$dir = WP_CONTENT_DIR . '/plugins/' . plugin_dir_path( $this->plugin ) . 'views/';
+
+		$this->assertEquals( $dir . 'settings.php',                       	$this->plugin_instance->locate_view( 'settings.php',                       	true ), 'settings.php'                       	);
+		$this->assertEquals( $dir . 'settings-day-single.php',            	$this->plugin_instance->locate_view( 'settings-day-single.php',            	true ), 'settings-day-single.php'            	);
+		$this->assertEquals( $dir . 'settings-exception-instructions.php',	$this->plugin_instance->locate_view( 'settings-exception-instructions.php',	true ), 'settings-exception-instructions.php'	);
+		$this->assertEquals( $dir . 'settings-exception-single.php',      	$this->plugin_instance->locate_view( 'settings-exception-single.php',      	true ), 'settings-exception-single.php'      	);
+		$this->assertEquals( $dir . 'settings-exceptions.php',            	$this->plugin_instance->locate_view( 'settings-exceptions.php',            	true ), 'settings-exceptions.php'            	);
+		$this->assertEquals( $dir . 'settings-support.php',               	$this->plugin_instance->locate_view( 'settings-support.php',               	true ), 'settings-support.php'               	);
+		$this->assertEquals( $dir . 'settings.php',                       	$this->plugin_instance->locate_view( 'settings.php',                       	true ), 'settings.php'                       	);
+		$this->assertEquals( $dir . 'table-row.php',                      	$this->plugin_instance->locate_view( 'table-row.php',                      	true ), 'table-row.php'                      	);
+		$this->assertEquals( $dir . 'table.php',                          	$this->plugin_instance->locate_view( 'table.php',                          	true ), 'table.php'                          	);
+		$this->assertEquals( $dir . 'widget-admin.php',                   	$this->plugin_instance->locate_view( 'widget-admin.php',                   	true ), 'widget-admin.php'                   	);
 	}
 
 
