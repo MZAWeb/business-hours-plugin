@@ -74,8 +74,8 @@ to have the list collapsed by default and a link to open it.
 == Upgrade Notice ==
 
 = 2.1 =
-* Enhancement: Add test suite
-* Enhancement: Improve code quality
+New features:
+Bug fixes:
 
 = 2.0.1 =
 Bug fixes and small improvements.
@@ -84,6 +84,10 @@ Bug fixes and small improvements.
 Introducing Exceptions (Holidays, etc). Also, this version is (almost) a complete rewrite. Faster, more secure and with a lot of improvements.
 
 == Changelog ==
+
+= 2.1 =
+* Enhancement: Add test suite
+* Enhancement: Improve code quality
 
 = 2.0.1 =
 * Bugfix: Widget admin is faling to toggle advanced options on first load
