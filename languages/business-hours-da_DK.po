@@ -2,12 +2,13 @@
 # This file is distributed under the same license as the  package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Business Hours\n"
+"Project-Id-Version: Business Hours Danish Translations\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-26 12:06+0100\n"
-"PO-Revision-Date: 2013-06-26 12:06+0100\n"
+"POT-Creation-Date: 2013-06-26 12:02+0100\n"
+"PO-Revision-Date: 2013-06-26 12:03+0100\n"
 "Last-Translator: Casper Klenz-Kitenge <hi@cabgfx.com>\n"
-"Language-Team: MZAWeb <wordpress@mzaweb.com>\n"
+"Language-Team: CabGFX <hi@cabgfx.com>\n"
+"Language: Danish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -18,35 +19,35 @@ msgstr ""
 
 #: ../lib/BusinessHoursExceptions.class.php:272
 msgid "Every day"
-msgstr ""
+msgstr "Hver dag"
 
 #: ../lib/BusinessHoursExceptions.class.php:273
 msgid "Mondays to Fridays"
-msgstr ""
+msgstr "Mandag til fredag"
 
 #: ../lib/BusinessHoursExceptions.class.php:274
 msgid "Saturdays and Sundays"
-msgstr ""
+msgstr "Lørdag og søndag"
 
 #: ../lib/BusinessHoursExceptions.class.php:285
 msgid "Every month"
-msgstr ""
+msgstr "Hver måned"
 
 #: ../lib/BusinessHoursExceptions.class.php:300
 msgid "Every year"
-msgstr ""
+msgstr "Hvert år"
 
 #: ../lib/BusinessHoursSettings.class.php:80
 msgid "Closed"
-msgstr ""
+msgstr "Lukket"
 
 #: ../lib/BusinessHoursSettings.class.php:97 ../views/settings.php:3
 msgid "Business Hours"
-msgstr ""
+msgstr "Åbningstider"
 
 #: ../lib/BusinessHoursSettings.class.php:206
 msgid "Settings saved."
-msgstr ""
+msgstr "Indstillingerne er gemt."
 
 #: ../lib/BusinessHoursSettings.class.php:260
 #, php-format
@@ -55,112 +56,125 @@ msgid ""
 "to the <a href=\"%s\">settings page</a> to check the new features. If you "
 "have any suggestion or issue, <a href=\"\">create a support ticket</a>."
 msgstr ""
+"Tak ford du opdaterede <strong>Business Hours</strong> til version %s. Gå "
+"til <a href=\"%s\">Indstillinger</a> for at se de nye muligheder. Hvis du "
+"har forslag eller oplever fejl, kan du <a href=\"\">skrive til support</a>."
 
 #: ../lib/BusinessHoursWidget.class.php:9
 msgid "Shows your business hours by day"
-msgstr ""
+msgstr "Viser dine daglige åbningstider"
 
 #: ../lib/BusinessHoursWidget.class.php:13
 msgid "Business Hours by Day"
-msgstr ""
+msgstr "Daglige åbningstider"
 
 #: ../lib/BusinessHoursWidget.class.php:98
 msgid "Business hours on"
-msgstr ""
+msgstr "Åbningstider"
 
 #: ../views/settings-days.php:5
 msgid "Business hours for each day of the week"
-msgstr ""
+msgstr "Åbningstider for hver ugedag"
 
 #: ../views/settings-days.php:7
 msgid "Leave the fields empty for the days your business is closed."
-msgstr ""
+msgstr "Efterlad felterne tomme, de dage hvor du holder lukket."
 
 #: ../views/settings-days.php:13 ../views/table.php:10
 msgid "Day"
-msgstr ""
+msgstr "Dag"
 
 #: ../views/settings-days.php:14 ../views/table.php:11
 msgid "Open"
-msgstr ""
+msgstr "Åbner"
 
 #: ../views/settings-days.php:15 ../views/table.php:12
 msgid "Close"
-msgstr ""
+msgstr "Lukker"
 
 #: ../views/settings-exception-instructions.php:1
 msgid "<b>Instructions:</b>"
-msgstr ""
+msgstr "<b>Sådan gør du:</b>"
 
 #: ../views/settings-exception-instructions.php:3
 msgid "1) Click on \"Add Exception\"."
-msgstr ""
+msgstr "1) Klik på \"Tilføj undtagelse\"."
 
 #: ../views/settings-exception-instructions.php:5
 msgid ""
 "2) Select a day, month and / or year (i.e. To add an exception for every "
 "March 1st select day 1, month March and leave the year empty)."
 msgstr ""
+"2) Vælg en dag, måned og/eller år (for en undtagelse hver 1. Marts, skulle "
+"du så vælge Dag: 1 – Måned: Marts – År: Hvert år)."
 
 #: ../views/settings-exception-instructions.php:7
 msgid ""
 "3) Type the open and close hours for this exception. Leave empty if your "
 "business remains closed during this exception."
 msgstr ""
+"3) Skriv åbne- og lukketider for denne undtagelse. Lad felterne være tomme, "
+"hvis der er lukket i hele perioden for denne undtagelse."
 
 #: ../views/settings-exception-instructions.php:9
 msgid ""
 "4) If you want to add more exceptions, click the 'Add Exceptions' button and "
 "repeat this process in the new added row."
 msgstr ""
+"4) Hvis du vil tilføje flere undtagelser, skal du klikke 'Tilføj undtagelse'-"
+"knappen og gentage ovenstående i den nye række af felter."
 
 #: ../views/settings-exception-instructions.php:11
 msgid ""
 "5) Need help setting exceptions? <a href='https://github.com/MZAWeb/business-"
 "hours-plugin/issues'>Open a ticket in GitHub</a>"
 msgstr ""
+"5) Har du brug for hjælp med at tilføje undtagelser? <a href='https://github."
+"com/MZAWeb/business-hours-plugin/issues'>Skriv til support på GitHub</a>"
 
 #: ../views/settings-exception-single.php:2
 msgid "Day:"
-msgstr ""
+msgstr "Dag:"
 
 #: ../views/settings-exception-single.php:7
 msgid "Month:"
-msgstr ""
+msgstr "Måned:"
 
 #: ../views/settings-exception-single.php:12
 msgid "Year:"
-msgstr ""
+msgstr "År:"
 
 #: ../views/settings-exception-single.php:17
 msgid "Open:"
-msgstr ""
+msgstr "Åbner:"
 
 #: ../views/settings-exception-single.php:22
 msgid "Close:"
-msgstr ""
+msgstr "Lukker:"
 
 #: ../views/settings-exception-single.php:29
 msgid "Remove"
-msgstr ""
+msgstr "Fjern"
 
 #: ../views/settings-exceptions.php:5
 msgid "Exceptions"
-msgstr ""
+msgstr "Undtagelser"
 
 #: ../views/settings-exceptions.php:8
 msgid ""
 "Exceptions allow you to set different business hours for specific days (ie: "
 "Holidays, Vacations, etc)."
 msgstr ""
+"Undtagelser gør det muligt at vise andre åbningstider for bestemte dage "
+"&amp; perioder (f.eks. helligdage, ferier, osv.)."
 
 #: ../views/settings-exceptions.php:19
 msgid "Add exception"
-msgstr ""
+msgstr "Tilføj undtagelse"
 
 #: ../views/settings-support.php:3
 msgid "Support / Contact"
-msgstr ""
+msgstr "Support / Kontakt"
 
 #: ../views/settings-support.php:6
 msgid ""
@@ -169,16 +183,22 @@ msgid ""
 "\"http://wordpress.org/support/plugin/business-hours-plugin\">support "
 "forums</a> at WordPress.org"
 msgstr ""
+"Har du brug for support? Eller har du en god idé? Skriv til support, ved at "
+"oprette et <a href=\"https://github.com/MZAWeb/business-hours-plugin/issues"
+"\">nyt issue på GitHub</a> eller skriv i <a href=\"http://wordpress.org/"
+"support/plugin/business-hours-plugin\">support forum met</a> på WordPress.org"
 
 #: ../views/settings-support.php:8
 msgid ""
 "<a href=\"https://github.com/MZAWeb/business-hours-plugin/wiki"
 "\">Documentation</a>"
 msgstr ""
+"<a href=\"https://github.com/MZAWeb/business-hours-plugin/wiki"
+"\">Dokumentation</a>"
 
 #: ../views/settings-support.php:9
 msgid "<a href=\"http://twitter.com/MZAWeb\">Tweet to me</a>"
-msgstr ""
+msgstr "<a href=\"http://twitter.com/MZAWeb\">Send et Tweet</a>"
 
 #: ../views/settings-support.php:10
 msgid ""
@@ -186,6 +206,9 @@ msgid ""
 "utm_source=business_hours&utm_medium=settings&utm_campaign=plugin\">My blog</"
 "a>"
 msgstr ""
+"<a href=\"http://danieldvork.in/?"
+"utm_source=business_hours&utm_medium=settings&utm_campaign=plugin\">Min "
+"blog</a>"
 
 #: ../views/settings-support.php:11
 msgid ""
@@ -193,6 +216,9 @@ msgid ""
 "utm_source=business_hours&utm_medium=settings&utm_campaign=plugin\">MZAWeb - "
 "WordPress Development</a>"
 msgstr ""
+"<a href=\"http://mzaweb.com/?"
+"utm_source=business_hours&utm_medium=settings&utm_campaign=plugin\">MZAWeb - "
+"WordPress Development</a>"
 
 #: ../views/settings-support.php:13
 msgid ""
@@ -200,49 +226,82 @@ msgid ""
 "want to make me happy, you can donate a few bucks to me via PayPal at "
 "daniel@mzaweb.com"
 msgstr ""
+"Jeg lover at holde dette plugin gratis forevigt. Hvis det gør dig glad og du "
+"gerne vil gøre mig glad, kan du donere et par pebernødder til mig via PayPal "
+"til daniel@mzaweb.com"
 
 #: ../views/settings.php:23
 msgid "Save Changes"
-msgstr ""
+msgstr "Gem ændringer"
 
 #: ../views/widget-admin.php:2
 #, php-format
 msgid "Go to the <a href=\"%s\">settings</a> to setup your business hours."
 msgstr ""
+"Gå til <a href=\"%s\">Indstillinger</a> for at skrive dine åbningstider."
 
 #: ../views/widget-admin.php:5
 msgid "Widget title"
-msgstr ""
+msgstr "Widget titel"
 
 #: ../views/widget-admin.php:17
 msgid "Show a table with the business hours for all weekdays"
-msgstr ""
+msgstr "Vis en tabel med åbningstider for alle hverdage"
 
 #: ../views/widget-admin.php:24
 msgid "Make the list collapsible"
-msgstr ""
+msgstr "Gør det muligt at folde listen ind/ud"
 
 #: ../views/widget-admin.php:29
 msgid "Toggle templating options"
-msgstr ""
+msgstr "Vis/skjul muligheder for templating (widget skabelonen)"
 
 #: ../views/widget-admin.php:34
 msgid "Template for heading"
-msgstr ""
+msgstr "Template til overskrift"
 
 #: ../views/widget-admin.php:39
 msgid "The tag {{Day}} will be replaced with the weekday name."
-msgstr ""
+msgstr "{{Day}} bliver automatisk udskiftet med navnet på ugedagen."
 
 #: ../views/widget-admin.php:43
 msgid "Template for working hours"
-msgstr ""
+msgstr "Template til åbningstiderne"
 
 #: ../views/widget-admin.php:48
 msgid ""
 "The tags {{Open}} and {{Close}} will be replaced with the correct values."
 msgstr ""
+"{{Open}} og {{Close}} bliver automatisk udskiftet med de rigtige værdier."
 
 #: ../views/widget-admin.php:52
 msgid "Template for \"closed\" text"
-msgstr ""
+msgstr "Template til \"lukket\" tekst"
+
+#~ msgid "Title"
+#~ msgstr "Titel"
+
+#~ msgid ""
+#~ "The tags {{Open}} and {{Close}} will be replaced with the correct value."
+#~ msgstr ""
+#~ "{{Open}} og {{Close}} bliver automatisk udskiftet med de rigtige værdier."
+
+#~ msgid ""
+#~ "Show also a collapsible list with the business hours for each weekday:"
+#~ msgstr ""
+#~ "Vis også en liste med åbningstider for hver ugedag, der kan foldes ind/ud:"
+
+#~ msgid "[Show all days]"
+#~ msgstr "[Vis alle dage]"
+
+#~ msgid "Is it open on %s?"
+#~ msgstr "Er der åbent på %s?"
+
+#~ msgid "Support"
+#~ msgstr "Support"
+
+#~ msgid "Bugs? Questions? Suggestions?"
+#~ msgstr "Fejl? Spørgsmål? Forslag/idéer?"
+
+#~ msgid "Business Hours Settings"
+#~ msgstr "Åbningstider indstillinger"

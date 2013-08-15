@@ -23,6 +23,7 @@ We've included language files for:
 
 *	Spanish
 *	Dutch
+* Danish (by Casper Klenz-Kitenge / @cabgfx)
 
 If you want to help me translate this plugin to your language, please drop me a line or contact me in the [support forum](http://wordpress.org/tags/business-hours-plugin#postform)
 

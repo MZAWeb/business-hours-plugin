@@ -36,7 +36,7 @@
 		<textarea class="widefat" id="<?php echo $this->get_field_id( 'template_today' ); ?>"
 		          name="<?php echo $this->get_field_name( 'template_today' ); ?>" type="text"
 		          rows="6"><?php echo esc_textarea( $instance["template_today"] ); ?></textarea>
-		<small>The tag {{Day}} will be replaced with the weekday name.</small>
+		<small><?php echo __("The tag {{Day}} will be replaced with the weekday name.", "business-hours"); ?></small>
 	</p>
 	<p>
 		<label
