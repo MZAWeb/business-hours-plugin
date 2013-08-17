@@ -139,4 +139,24 @@ class WP_Test_BusinessHours extends WP_UnitTestCase {
 		$this->assertTrue( shortcode_exists( 'businesshoursweek' ) );
 	}
 
+	function test_shortcode_week_for_no_data() {
+
+		$content = do_shortcode( '[businesshoursweek collapsible="true"]' );
+
+		// We don't have any data, so the default should kick in
+		$count   = substr_count( $content, 'Closed' );
+
+		$this->assertEquals( $count, 7 );
+
+	}
+
+	function test_shortcode_week_enqueues_resources_if_collapsible() {
+
+		do_shortcode( '[businesshoursweek collapsible="true"]' );
+
+		$this->assertTrue( wp_script_is( 'business_hours_script' ) );
+		$this->assertTrue( wp_style_is ( 'business_hours_style'  ) );
+
+	}
+
 }
