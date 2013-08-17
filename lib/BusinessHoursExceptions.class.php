@@ -10,7 +10,7 @@ class BusinessHoursExceptions {
 	private static $_actual_dates    = array();
 
 	/**
-	 * @var BusinessHoursSet
+	 * @var iBusinessHoursTemporalExpression
 	 */
 	private $_exceptions = null;
 
@@ -33,7 +33,7 @@ class BusinessHoursExceptions {
 
 		if ( !$this->_exceptions )
 			$this->_build_exceptions_rules();
-
+		
 		return $this->_exceptions->includes( $date );
 	}
 

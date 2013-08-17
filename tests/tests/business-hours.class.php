@@ -1,9 +1,4 @@
 <?php
-/*-------------------------------------------------------------------------------------*
- * Helps loading templates from the /views/ directory
- *
- * @author Modern Tribe Inc. (http://tri.be/)
- *-------------------------------------------------------------------------------------*/
 
 class WP_Test_BusinessHours extends WP_UnitTestCase {
 
@@ -139,6 +134,15 @@ class WP_Test_BusinessHours extends WP_UnitTestCase {
 		$this->assertTrue( shortcode_exists( 'businesshoursweek' ) );
 	}
 
+	function test_shortcode_for_no_data(){
+
+		$content = do_shortcode( '[businesshours closed="YOU_BETTER_BE"]SHOULD_NOT_BE[/businesshours]' );
+
+		$this->assertContains( "YOU_BETTER_BE", $content );
+		$this->assertNotContains( "SHOULD_NOT_BE", $content );
+
+	}
+
 	function test_shortcode_week_for_no_data() {
 
 		$content = do_shortcode( '[businesshoursweek collapsible="true"]' );
@@ -146,7 +150,7 @@ class WP_Test_BusinessHours extends WP_UnitTestCase {
 		// We don't have any data, so the default should kick in
 		$count   = substr_count( $content, 'Closed' );
 
-		$this->assertEquals( $count, 7 );
+		$this->assertEquals( 7, $count );
 
 	}
 
@@ -167,5 +171,9 @@ class WP_Test_BusinessHours extends WP_UnitTestCase {
 		$this->assertArrayHasKey( 'BusinessHoursWidget', $wp_widget_factory->widgets );
 		$this->assertTrue( is_a( $wp_widget_factory->widgets['BusinessHoursWidget'], 'BusinessHoursWidget' ) );
 	}
+
+	function test_template_override_works_for_locate_view_when_override_is_true(){
+	}
+	
 
 }
