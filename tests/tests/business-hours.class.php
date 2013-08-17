@@ -159,4 +159,13 @@ class WP_Test_BusinessHours extends WP_UnitTestCase {
 
 	}
 
+	function test_register_widgets() {
+		$this->plugin_instance->register_widgets();
+
+		global $wp_widget_factory;
+
+		$this->assertArrayHasKey( 'BusinessHoursWidget', $wp_widget_factory->widgets );
+		$this->assertTrue( is_a( $wp_widget_factory->widgets['BusinessHoursWidget'], 'BusinessHoursWidget' ) );
+	}
+
 }
