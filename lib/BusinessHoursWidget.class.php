@@ -3,7 +3,7 @@
 
 class BusinessHoursWidget extends WP_Widget {
 
-	function BusinessHoursWidget() {
+	function __construct() {
 
 		$widget_ops = array( 'classname'   => 'workinghourswidget',
 		                     'description' => __( 'Shows your business hours by day', "business-hours" ) );
