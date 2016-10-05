@@ -10,7 +10,7 @@ class BusinessHoursWidget extends WP_Widget {
 
 		$control_ops = array( 'width' => 200, 'height' => 350, 'id_base' => 'workinghourswidget' );
 
-		$this->WP_Widget( 'workinghourswidget', __( 'Business Hours by Day', "business-hours" ), $widget_ops, $control_ops );
+		parent::__construct( 'workinghourswidget', __( 'Business Hours by Day', "business-hours" ), $widget_ops, $control_ops );
 
 		add_action( 'wp_enqueue_scripts', array( &$this, 'scripts' ) );
 		add_action( 'admin_enqueue_scripts', array( &$this, 'scripts' ) );
